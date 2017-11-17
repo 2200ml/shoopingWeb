@@ -238,7 +238,7 @@
 		<div class="jumbotron">
 			<div class="row">
 				<div>
-					<h1>Hello, world!</h1>
+					<h1>Hello, world! Hello Github!</h1>
 				</div>
 				<div class="col-md-4 pull-right">
 					<form id="search_form">
