@@ -48,7 +48,7 @@
 				<prop key="hibernate.cache.use_query_cache">true</prop>			
 			</props>
 		</property>
-		<!-- 有@註解的才使用二級緩存的配置 -->
+		<!-- 二級緩存的配置策略:基於註解的方式 -->
 		<property name="sharedCacheMode" value="ENABLE_SELECTIVE"></property>
 	</bean>
 	
