@@ -1,4 +1,4 @@
-package com.oohooh.shopping.entities;
+package com.oohooh.shopping.utils;
 
 import java.util.HashMap;
 import java.util.Map;

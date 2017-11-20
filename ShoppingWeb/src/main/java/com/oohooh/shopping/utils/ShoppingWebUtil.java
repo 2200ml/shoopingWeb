@@ -52,12 +52,6 @@ public class ShoppingWebUtil {
 					navigateNum.add(2, pageNo - 1);
 					navigateNum.add(3, pageNo);
 					navigateNum.add(4, pageNo + 1);
-				}else if(pageNo + 2 == page.getTotalPages()) {
-					navigateNum.add(0, pageNo - 2);
-					navigateNum.add(1, pageNo - 1);
-					navigateNum.add(2, pageNo);
-					navigateNum.add(3, pageNo + 1);
-					navigateNum.add(4, pageNo + 2);
 				}else if(pageNo == page.getTotalPages()) {
 					navigateNum.add(0, pageNo - 4);
 					navigateNum.add(1, pageNo - 3);

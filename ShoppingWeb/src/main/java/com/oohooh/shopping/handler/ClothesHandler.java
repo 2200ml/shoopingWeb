@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oohooh.shopping.entities.Clothes;
-import com.oohooh.shopping.entities.JsonMsg;
 import com.oohooh.shopping.entities.ShoppingCart;
 import com.oohooh.shopping.entities.ShoppingCartItem;
 import com.oohooh.shopping.service.ClothesService;
+import com.oohooh.shopping.utils.JsonMsg;
 import com.oohooh.shopping.utils.ShoppingWebUtil;
 
 @Controller

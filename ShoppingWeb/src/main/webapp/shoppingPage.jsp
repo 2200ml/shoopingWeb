@@ -1,56 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@ include file="/commons/commons-title.jsp" %>
-<style type="text/css">
-	
-	.jumbotron {
-		margin-bottom:20px;
-	}
-	
-	.grey_font {
-		font-size:14px;
-		color:grey;
-	}
-	
-	.grey_font a{
-		font-size:14px;
-		font-color:grey;
-		color:grey;
-		text-decoration: underline;
-	}
-	
-	.page_change {
-		line-height:34px;
-	}
-	
-	.form-control:focus{
-		outline: none;
-		box-shadow:none;
-		border:1px solid #ccc;
-	}
-	
-	.jumbotron {
-		padding-bottom:30px;
-		padding-right:30px !important;
-	}
-	
-	.itemImgSize {
-		height: 370px; 
-		width: 290px;
-	}
-	
-	.itemImgSize img {
-		width: 100%;
-		height: 100%
-	}
-	
-</style>
+<link rel="stylesheet" href="static/shoppingWeb/shoppingPage.css">
 
 <script type="text/javascript">
 	
@@ -138,12 +94,9 @@
 				var prePointLi = $("<li class='prePointLi'></li>").append($("<a></a>").append("<b>...</b>"));
 				
 				if(hasPrevious == false){
+					//版本1
 					firstLi.addClass("disabled");
 					previousLi.addClass("disabled");
-					
-					firstLi.hide();
-					previousLi.hide();
-					prePointLi.hide();
 					
 					firstLi.click(function(){ 
 						return false;
@@ -151,6 +104,11 @@
 					previousLi.click(function(){ 
 						return false;
 					});
+					
+					//版本2
+					firstLi.hide();
+					previousLi.hide();
+					prePointLi.hide();
 				}
 				
 				var nextNo = ${page.number} + 1 + 1;
@@ -164,12 +122,9 @@
 				var afterPointLi = $("<li class='afterPointLi'></li>").append($("<a></a>").append("<b>...</b>"));
 				
 				if(hasNext == false){
+					//版本1
 					nextLi.addClass("disabled");
 					lastLi.addClass("disabled");
-					
-					nextLi.hide();
-					lastLi.hide();
-					afterPointLi.hide();
 					
 					lastLi.click(function(){ 
 						return false;
@@ -177,6 +132,11 @@
 					nextLi.click(function(){ 
 						return false;
 					});
+					
+					//版本2
+					nextLi.hide();
+					lastLi.hide();
+					afterPointLi.hide();
 				}
 				
 				var ul = $("<ul></ul>").addClass("pagination");
@@ -238,7 +198,7 @@
 		<div class="jumbotron">
 			<div class="row">
 				<div>
-					<h1>Hello, world! Hello Github!</h1>
+					<h1>Hello, world!</h1>
 				</div>
 				<div class="col-md-4 pull-right">
 					<form id="search_form">

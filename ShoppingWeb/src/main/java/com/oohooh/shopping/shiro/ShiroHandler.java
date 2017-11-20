@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.oohooh.shopping.entities.JsonMsg;
+import com.oohooh.shopping.utils.JsonMsg;
 
 @Controller
 public class ShiroHandler {

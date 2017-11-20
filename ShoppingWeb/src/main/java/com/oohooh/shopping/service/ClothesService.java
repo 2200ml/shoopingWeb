@@ -74,7 +74,7 @@ public class ClothesService {
 		clothesRepository.delete(clothesId);
 	}
 	
-	@Transactional
+	@Transactional(readOnly=true)
 	public Page<Clothes> getPageByCondition(int pageNo, int pageSize, float minPrice, float maxPrice,
 			String genderCondition, String categoryCondition, String queryCondition) {
 

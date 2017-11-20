@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.oohooh.shopping.entities.JsonMsg;
 import com.oohooh.shopping.entities.Trade;
 import com.oohooh.shopping.service.TradeService;
+import com.oohooh.shopping.utils.JsonMsg;
 import com.oohooh.shopping.utils.ShoppingWebUtil;
 
 @Controller

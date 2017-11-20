@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oohooh.shopping.entities.Account;
-import com.oohooh.shopping.entities.JsonMsg;
 import com.oohooh.shopping.service.AccountService;
 import com.oohooh.shopping.shiro.EncryptUtil;
+import com.oohooh.shopping.utils.JsonMsg;
 
 @Controller
 public class AccountHandler {

@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oohooh.shopping.entities.Account;
-import com.oohooh.shopping.entities.JsonMsg;
 import com.oohooh.shopping.entities.ShoppingCart;
 import com.oohooh.shopping.entities.ShoppingCartItem;
 import com.oohooh.shopping.service.AccountBalanceService;
+import com.oohooh.shopping.utils.JsonMsg;
 import com.oohooh.shopping.utils.ShoppingWebUtil;
 
 @Controller

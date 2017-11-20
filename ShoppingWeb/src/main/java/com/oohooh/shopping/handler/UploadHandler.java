@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.oohooh.shopping.entities.Clothes;
-import com.oohooh.shopping.entities.JsonMsg;
 import com.oohooh.shopping.entities.Picture;
 import com.oohooh.shopping.service.UploadService;
+import com.oohooh.shopping.utils.JsonMsg;
 import com.oohooh.shopping.utils.ShoppingWebUtil;
 
 @Controller
