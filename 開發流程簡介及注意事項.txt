@@ -1,0 +1,577 @@
+====技術====
+Backend:
+Spring, spring MVC, JPA, Spring Data, Shiro, Maven, TortoiseGit
+
+Frontend:
+JQuery, Bootstrap,JQuery File Upload
+
+DB:
+MySql
+
+====網站功能====
+
+.商品頁面
+.分頁 
+.商品分類
+.搜尋商品
+.金額過濾
+.商品Detail 
+
+.登入 [Shiro]
+.註冊 [Shiro]
+.會員資料、修改 [Shiro]
+
+.購物車
+.checkout
+.交易紀錄
+
+.新增商品、上傳圖片 [JQuery File Upload]
+.修改、刪除商品
+
+====配置開發環境====
+
+1.建立Maven專案
+	
+2.配置web.xml
+	1.)Spring (applicationContext.xml)
+	2.)SpringMVC (springDispatcherServlet-servlet.xml)
+	3.)CharacterEncodingFilter (通常在所有Filter最前面)
+	4.)HiddenHttpMethodFilter
+	5.)OpenEntityManagerInViewFilter (類似OpenSessionInViewFilter)
+	6.)ShiroFilter(org.springframework.web.filter.DelegatingFilterProxy)
+  
+	[注意]
+	"/*" 會匹配所有url - 路徑型的和後綴型的url(包括/login , *.jsp , *.js 和 *.html 等)
+  
+	filter的url-pattern : (filter只要匹配成功，都將會加載)
+		三種正確的匹配方式:
+			<url-pattern>/*</url-pattern>
+			<url-pattern>*.do</url-pattern>
+			<url-pattern>/emp/*</url-pattern>
+			
+		兩種錯誤的filter匹配方式：
+			<url-pattern>/</url-pattern>  // 一定不可設置成該方式！
+			<url-pattern>/emp/</url-pattern>
+  
+	serlvet的url-pattern : (servlet只會加載一個匹配成功的)
+		1.它的匹配原則就是：找到唯一一個最適合的Servlet！
+		2.精確匹配 > /XXX/* > *.XXX > default servlet
+		3.當某個servlet的url-pattern設置為”/*”時：
+			/* 配置的servlet將會比其他所有的(包括容器内建的)servlet具有更高的優先級，那麼所有的請求都會在這個servlet结束 !!!
+			這是非常糟糕的！
+			通常，你更喜歡只在filter中使用 /*。它將通過調用doFilter()方法使請求繼續
+		4.僅包括"/"的URL模式，表示預設Servlet，當找不到適合的URL模式對應時，就會使用預設Servlet。
+		5."/" 的設置將會將當前指定的 servlet 設為web應用的默認servlet，原來web容器的默認servlet將被替換。
+		6.為什麼JSP頁面的請求並不會命中這個servlet，那是因為servlet容器内建的JSP servlet(不是default-servlet)將會被調用，
+		  而這個容器内建的JSP servlet已經默認地映射在*.jsp上。
+
+3.配置Spring MVC
+	1.)<context:component-scan base-package="" use-default-filters="false">
+		只掃描@Controller、@ControllerAdvice	
+		
+		@ControllerAdvice: SpringMVC異常處裡的標記，是基於全域範圍的
+		
+	2.)InternalResourceViewResolver
+		[注意]
+			prefix配置為"/"而不是"/WEB-INF/views/"可彈性選擇要轉發的頁面
+			ex:return "WEB-INF/views/XXX" 		
+	3.)CommonsMultipartResolver
+		SpringMVC要上傳檔案時的標配		
+	4.)<mvc:annotation-driven>	
+	5.)<mvc:default-servlet-handler/>
+	
+4.配置Spring
+	1.)<context:component-scan base-package=""> [注意:use-default-filters="true"]		
+	2.)context:property-placeholder => db.properties
+	3.)ComboPooledDataSource
+	4.)LocalContainerEntityManagerFactoryBean [注意:不是LocalEntityManagerFactoryBean]
+		1.[注意:SingletonEhCacheRegionFactory]
+			因Shiro也使用EhCache會與JPA的EhCache(非單例)發生衝突 需配置成 SingletonEhCacheRegionFactory
+		2.sharedCacheMode
+			二級緩存的配置策略: ENABLE_SELECTIVE(基於註解的方式)	
+	5.)JpaTransactionManager
+	6.)tx:annotation-driven
+	7.)jpa:repositories
+
+5.配置Shiro
+	1.)securityManager
+		.ref cacheManager
+		.ref jdbcRealm
+		.設置rememberMe的有效期限 (秒)
+			name="rememberMeManager.cookie.maxAge" value="3600"
+	
+	2.)cacheManager
+		.設置ehcache的位置classpath:ehcache.xml
+	
+	3.)jdbcRealm
+		.自定義ShiroRealm的全類名
+		.使用的加密匹配器 (HashedCredentialsMatcher)
+			設置加密演算法 (MD5)
+			設置加密次數
+			
+	4.)lifecycleBeanPostProcessor (生命週期處理器)
+		
+	5.)shiroFilter 
+		.bean id需與web.xml中配置的shiroFilter的filter-name同名
+		.ref securityManager
+		.loginUrl value="login.jsp"
+		.filterChainDefinitions 設置各jsp、請求權限的配置
+			改用hibernate的實例工廠方法建立一個類來管理權限(避免spring配置文件太冗長，且可以方便地把權限資料存放到數據庫)
+			
+===開發頁面===
+
+1.通用的commons.jsp頁面
+	1.)使用<base>標籤設定環境根路徑 (<base href="${pageContext.request.contextPath }/">)
+	2.)導入jquery、bootstrap檔案
+	3.)bootstrap.min.js之前必須先導入jquery
+	4.)在需要commons.jsp的網頁<%@ include file="/commons/commons-title.jsp" %>
+	5.)功能:
+		.Home,Women,Men,Login,Logout,Register,My Account,Bag,upload Item 項目連結
+		.顯示購物車數量及金額
+	
+2.index.jsp
+	轉發shoppingPage請求到shoppingPage.jsp
+		
+3.shoppingPage.jsp 
+	顯示商品並使用分頁
+	各種條件過濾連結、Filter、商品搜尋
+	
+	[前端]
+		1.)build_clothes_div()
+			.需要每列展示X筆圖片後換行並排列整齊,使用 <div class="clearfix">
+			
+			.存放圖片的3種方法
+				I.  儲存在DB中 (DB容量有限，通常僅存放小圖片)
+				
+				II. 儲存在Web應用程式的靜態資料夾 (圖片過多會造成應用程式性能低落)
+				
+				III.儲存在本機硬碟中，使用虛擬路徑的方式存取圖片 (推薦)
+						.在Tomcat sever中配置虛擬路徑
+							path:/pic ; Document Base: D:\uploadFiles\pic
+						.在需要顯示的圖片路徑前添加虛擬路徑
+							<img src='/pic/" + item.picture.pic1 + "'>
+						
+		2.)各種條件過濾連結、Filter、商品搜尋
+			在請求url中攜帶各種條件參數
+			var pageParameter = 
+				"&pageSize=" + pageSize + "&minPrice=" + minPrice + "&maxPrice=" + maxPrice + 
+				"&genderCondition=" + genderCondition + "&categoryCondition=" + categoryCondition + 
+				"&queryCondition=" + queryCondition;
+						
+	[後端]
+		ClothesHandler	
+			1.)shoppingPage方法 
+				獲取page資訊
+				
+			2.)showItem方法 (用jquery方式展示商品，減少html與代碼的耦合)
+			   .shoppingPage、showItem方法幾乎一樣，shoppingPage主要是為了在換頁時也能有改變網址列的效果，
+				 讓用戶可以將頁面加到我的最愛，達到更好的用戶體驗;
+			   .有些springData沒有提供的page功能也能一併放入到請求域中，方便前端操作
+			   
+		ClothesService	
+			1.)getPageByCondition
+				使用springData 帶查詢條件的分頁方法(JpaSpecificationExecutor)
+				.前端傳來的條件若為空,會是空字串(不是null)，要使用 != "" 
+					if(genderCondition != null && genderCondition != "")
+				.使用cb.like 要為參數前後添加"%" 
+					"%" + xxxxx + "%"
+				.使用cb.and連接所有的Predicate 
+					return cb.and(predicates.toArray(new Predicate[predicates.size()]));		
+				
+		ClothesRepository [注意:是創建interface]	
+				
+4.clothesInfo.jsp
+	.商品相關細節
+	.加入購物車
+	.圖片以選轉木馬的方式展示 [bootstrap提供的方法]
+	.[admin]有Edit、Delete商品的按鈕
+
+	[前端]
+		.使用class="stacked"使內容垂直排列
+		
+		.從shoppingPage.jsp攜帶參數來到clothesInfo.jsp
+			使用param.xxx來獲取參數 ex: var clothesId = ${param.clothesId};	
+			
+		.Edit按鈕
+			連結到uploadItem.jsp進行修改操作
+	
+	[後端]
+		ClothesHandler
+			1.)clothesInfo
+				根據clothesId獲取clothes相關資訊
+		
+			2.)addToCart
+				從ShoppingWebUtil.getShoppingCart(request)獲取購物車再添加商品進去
+			
+			3.)deleteClothes
+				.根據clothesId獲取舊圖片位置，使用ShoppingWebUtil.deleteFile(oldFileFolder)方法，
+				 刪除圖片及資料夾
+				 
+				.刪除DB中的資料
+			
+5.cart.jsp
+	.購物車中商品detail
+	.修改商品數量
+	.修改商品size
+	.移除購物車中商品
+	.checkout
+	
+	[前端]
+		1.)removeItem使用了動畫效果
+			I.XXX.animate({opacity:'0.0'},1500);
+				XXX物件朝著透明度0、歷時1500毫秒變化
+			II.setTimeout("location.href='cart.jsp'", 1500);
+				1500毫秒後執行 location.href='cart.jsp
+				
+		2.)updateQty
+			使用change做觸發
+			
+		3.)updateSize
+			使用change做觸發
+			需傳送新舊size用作itemId的增刪		
+			
+	[後端]
+		ClothesHandler
+			1.)cartItems
+				從購物車中獲取item的集合
+				
+			2.)removeItem
+				調用ShoppingCart刪除Item
+	
+6.checkout.jsp [需認證過後才能訪問]
+	.顯示用戶餘額
+	.顯示購買清單
+	.若餘額、庫存不足，顯示錯誤訊息
+	.確定交易
+	
+	[前端]
+		校驗用戶餘額、商品庫存
+	
+	[後端]
+		AccountBalanceHandler
+			confirmCheckout
+				.從session域中獲取當前用戶名，再獲取用戶餘額及商品庫存
+				.若有餘額不足或商品庫存不足則返回錯誤訊息
+				.shoppingCartItem的stored屬性用來儲存商品的庫存
+				.若皆足夠則調用accountBalanceService.update(sc , sum, account, totalMoney)
+				
+		AccountBalanceService
+			update
+				.創建Trade 紀錄交易資訊
+				
+				.創建TradeItem 紀錄交易商品Detail
+					tradeItemRepository可直接儲存tradeItem的集合
+						Set<TradeItem> tradeItems = new LinkedHashSet<>();
+						tradeItemRepository.save(tradeItems);
+						
+				.餘額、庫存、交易資訊皆更新完畢後清空購物車 sc.clear();
+				
+7.uploadItem.jsp [需有admin權限才能訪問;使用JQuery File Upload框架]
+	.建立或修改商品並上傳圖片
+	
+	[前端]
+		1.)添加的靜態資源有其順序:(如下)
+			jquery.fileupload.css
+			jquery.ui.widget.js
+			load-image.all.min.js
+			bootstrap.min.js
+			jquery.iframe-transport.js
+			jquery.fileupload.js
+			jquery.fileupload-process.js
+			jquery.fileupload-image.js
+			jquery.fileupload-validate.js
+			
+		2.)以請求域中是否有clothesId來判斷是新增還是修改
+		
+		3.)[注意]$(XXX).eq(n)可用來選擇第n個XXX選擇器
+		
+		4.)<input type="file" name="files[]" multiple> 添加了multiple屬性，在選擇檔案時可以一次選擇多個檔案
+			受maxNumberOfFiles屬性約束，在選擇超過數量後會顯示錯誤訊息
+			
+		5.)[注意]特別功能的變數:
+			var fileCount = 0; 用來記錄已上傳了幾個檔案，限制上傳個數
+			var imgIndex = 0;  用來識別第幾個圖片
+			var fileList = []; 配合singleFileUploads: false，存放上傳檔案資料的集合，用來達到一個請求上傳多個檔案的效果
+		
+		6.)新增商品時限制了一定得上傳圖片
+		
+		7.)修改商品時可以不重新上傳圖片直接修其他內容
+			if(fileList.length == 0 && clothesId > 0)
+			
+		8.)一個請求上傳多個檔案需使用如下方法
+			$("#fileupload").fileupload('send',
+						{files:fileList,  //上傳檔案
+						 formData:        //其他表單資料...
+						 
+	[後端]
+		UploadHandler
+			此Handler使用了@ModelAttribute來獲取資料庫中的clothes物件
+		
+			1.)uploadClothes (新增並上傳圖片時)
+				.MultipartFile[] files //springMVC提供的上傳檔案專用的類型
+				
+				.建立資料夾並存放當前上傳的圖片
+					I. 資料夾名稱以當前時間及第一個圖片檔名作命名
+					II.遍歷files依序將檔案放入資料夾
+						[注意]使用file.transferTo(資料夾);  //檔案存入資料夾的方法
+			
+			2.)clothesUpdate/{clothesId} (修改時)
+				.與uploadClothes大致相同，不同點在於若有重新上傳圖片，須將舊檔案刪除
+					調用ShoppingWebUtil.deleteFile(oldFileFolder);刪除舊檔案
+					
+8.register.jsp [加密部分使用Shiro框架]
+	.用戶註冊
+	.使用了前端校驗及後端校驗
+
+	[前端]
+		1.)validateUsername
+			.檢查用戶名是否存在
+			.檢查完後必須在提交按鈕添加success或error屬性ajax_va，
+				否則按下SAVE按鈕username就算出異常還是可以繼續之後的步驟。
+			
+		2.)[注意]	
+			提交按鈕根據ajax_va屬性值判斷validateUsername是否通過，
+			且需放在其他表單校驗的前面，否則再次點擊提交按鈕程序還是會直接通過(但後端校驗不會通過)
+					
+				if($(":submit").attr("ajax_va") == "error"){
+					return false;
+				}
+			
+				if(!validate_add_form()){
+					return false;
+				}
+				
+	[後端]	
+		AccountHandler
+			register
+				.使用了springMVC的@Valid註解 (JSR303校驗)，需添加BindingResult記錄錯誤訊息
+					[注意]springMVC並沒有提供JSR303的實現產品，需添加hibernate-validator-5.4.1.Final.jar
+				.@Valid標註在需要校驗的實體類Account前面，在Account的屬性上添加校驗規則
+				.若BindingResult存在錯誤則返回前端顯示
+				.若無錯誤則進行密碼加密，調用EncryptUtil.EncryptAccount(account)
+				.調用AccountService.save(account)
+				
+		AccountService	
+			save
+				.在此會給予user角色 (admin角色直接從DB添加)
+				.創建AccountBalance賦予用戶餘額帳號
+				
+9.login.jsp [使用Shiro框架]
+	.登入帳號、密碼校驗(前後端)
+	.Remember me
+	
+	[前端]
+		.傳送username、password、remember me的值
+		.因使用了Shiro提供的記住上一頁的方法，用戶名若超過了在session域中設定的時間，會找不到之前的頁面因而報錯
+			//防止session失效
+			if(undefined != result.jsonObject.url){
+				location.href = result.jsonObject.url;
+			}else{
+				location.href = "myAccount.jsp";
+			}
+	
+	[後端]
+		ShiroHandler
+			login
+				.使用Shiro提供的記住上一頁的方法，以便在需要重新認證的頁認證成功後可以"直接"進入該頁面
+				 SavedRequest savedRequest = WebUtils.getSavedRequest(request);
+				
+				.封裝完username、password、rememberMe後調用ShiroRealm的doGetAuthenticationInfo(AuthenticationToken token)
+		
+		ShiroRealm
+			.創建自定義ShiroRealm並繼承AuthorizingRealm
+			
+			.Override doGetAuthenticationInfo(AuthenticationToken token) 認證方法 (登入相關)
+				從數據庫中獲取Account、加密過的密碼、salt值進行解密，並返回作比對
+				SimpleAuthenticationInfo(principal, hashedCredentials, credentialsSalt, realmName);
+				
+			.Override doGetAuthorizationInfo(PrincipalCollection principals) 授權方法 (角色相關)
+				從數據庫中獲取該Account具有那些角色，返回作比對
+				SimpleAuthorizationInfo(roles);
+				
+10.member.jsp
+	.顯示用戶資訊及餘額
+	.修改用戶資訊
+	.修改密碼使用Bootstrap的模態框效果
+	.表單一樣使用前後端校驗
+	
+		[前端]
+			.若不想在點擊背景時關閉模態框
+				在該模態框配置backdrop:"static"
+		
+			.為了實現Restful風格，使用$.ajax發送請求;在表單資料序列化後添加&_method=PUT
+				$.ajax({
+					url:"update/" + $("#id").val(),
+					type:"POST",
+					data:$("#update_form").serialize() + "&_method=PUT",
+					success:function(result){
+					...
+				
+				[注意]若想在type:直接寫PUT，Tomcat容器不會自動封裝請求參數，需使用springMVC提供的Filter來封裝，
+					  需在web.xml配置HttpPutFormContentFilter
+					  
+11.myOrder.jsp
+	.用戶的交易紀錄 
+	.使用分頁
+					  
+	[前端]
+		顯示交易紀錄時間
+			jquery若想顯示自定義的時間格式需額外添加其他插件來達成;
+			這邊使用原生方法以拼湊的方式逐一建構時間格式
+	
+	[後端]
+		[注意]
+			.開發時遇到的問題:
+				原本讓Account與Trade建立一對一關聯關係，並由Account來維護，想從Account來獲取Trade資料;
+			    TradeService的Page類型就使用了Account (Page<Account>)，
+			    但返回到前端的Json數據格式整個詭異，無法each內容提取資料
+			  
+			.解決辦法:
+				.頁面要展示的是Trade資料不是Account資料;應該讓Trade當主角，由Trade來維護一對一關聯關係，由Trade來獲取Account
+				.TradeHandler從Session中獲取username傳入TradeService的getPage方法
+				.Page類型為Page<Trade>
+				
+				
+[實體類]		
+		
+	1.ShoppingCart
+		1.)addClothes(Clothes clothes, Integer size)
+			添加商品到購物車
+		2.)clear()
+			清空購物車
+		3.)removeItem(Integer id)
+			移除購物車中商品	
+		4.)updateItemQuantity(Integer id, int quantity)
+			修改商品數量	
+		5.)updateItemSize(Clothes clothes, int oldSize, int newSize, int quantity)
+			.修改商品size
+			.[注意]因ItemId 是由 clothesId 及 size 產生的，所以修改商品size等於修改了ItemId，
+				  因此得先刪除原本的Item再創建新的Item並重新設置itemId、size、數量	 
+				  
+		6.)其他相關方法
+		
+	2.ShoppingCartItem
+		[注意]因商品有size之分，為了使同一件但不同size的商品能在購物車中分別顯示，
+			   需要額外創建ItemId		   
+		[注意]ItemId 可能會有重複創建的情況
+			  因本項目有4種size，clothesId * 4 + size 後就不會有ItemId重複的情況
+	
+	3.Trade
+		.交易紀錄相關訊息
+		
+	4.TradeItem
+		.交易商品Detail
+		.[注意]原本與Clothes是多對一的關聯關係，但在刪除了Clothes後會發生交易商品Detail讀取Clothes訊息為null的狀況，
+			   之後改成把clothes的相關訊息在交易時就添加到TradeItem的屬性中	
+	
+	5.Account
+		.部分屬性添加了JSR303校驗註解
+			@Email、@Past、@NotEmpty、@NotNull、@Pattern
+			@Pattern可自定義正則規則
+			@NotEmpty僅適用於String類型
+			
+		.與AccountBalance是一對一關聯關係
+			[注意]在創建Account時會同時創建AccountBalance，但此時AccountBalance還是臨時對象，在建立一對一關聯關係時會報錯
+				  object references an unsaved transient instance - save the transient instance beforeQuery flushing
+				  解決辦法:在關聯關係註解中添加 cascade = { CascadeType.ALL }
+
+				  
+[實體類間的關聯關係]
+	Account ==> AccountBalance 
+		Account維護 單向一對一
+		
+	Clothes ==> Picture
+		Clothes維護 單向一對一
+		
+	Trade ==> Account
+		Trade維護  單向多對一
+		
+	TradeItem <==> Trade
+		TradeItem維護 雙向多對一
+				  
+				  
+[工具類]	
+
+	1.JsonMsg (通用的Json格式的類)
+		1.)success code、fail code
+		2.)message
+		3.)Map<String, Object> jsonObject
+		4.)3個方法 success()、fail()、add()
+
+	2.shoppingWebUtils
+		1.getNavigateNumber(Page page)方法 [模擬pageHelper的NavigateNumber方法]
+			獲取可動態改變的分頁碼
+			
+		2.getShoppingCart(HttpServletRequest request)方法
+			獲取購物車
+	
+		3.deleteFile(File file)
+			.[注意]若資料夾非空，則無法直接刪除資料夾
+			.在此方法中使用for循環逐一刪除資料夾中檔案
+			
+		4.刪除檔案的另一種方法
+			使用FileUtils API刪除檔案
+				FileUtils.forceDelete(oldFileFolder); 
+			
+	3.EncryptUtil
+		使用MD5加密法，並設置加密1024次 
+			algorithmName = "MD5"、 hashIterations = 1024
+			
+		EncryptAccount(Account account)
+			.使用Shiro提共的數字產生器SecureRandomNumberGenerator
+			.為密碼添加salt值，salt值為帳戶名 + SecureRandomNumberGenerator隨機值再轉成16進制
+				String password = new SimpleHash(algorithmName, account.getPassword(), salt, hashIterations).toHex();				
+			.[注意]salt值也得保存至數據庫，以供解密比對之用
+	
+	
+[CSS相關]
+	.若css需要更高的優先權，可添加 !important
+	.若css想取消input內的藍色框，在chrome中是使用 outline: none;	
+		
+		
+[其他補充]
+	1.關聯關係中，由多的一方來維護關聯關係有比較好的性能
+	
+	2.[注意]在返回的Json中若有物件具有"雙向"關聯關係，會發生死循環的狀況;
+			需在相關類上添加@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+			該註解會在Json中添加臨時的id來辨識物件間的關聯關係
+			
+	3.javascript中正則表達式需在前後添加"/"  ex: /^[a-z0-9_-]{6,16}$/;
+	
+	4.在請求域中的物件若為空會報錯，需使用""包裹 
+		ex: var genderCondition = "${genderCondition}";
+	
+	5.完整的校驗: 前端校驗 + 後端校驗 + 數據庫約束
+		
+	6.一對一關聯關係需添加唯一約束 unique = true
+	
+	7.ehcache.xml使用jar包提供的默認配置，shiro部分則參考網路上提供的配置
+	
+	8.$("#" + XXX) 可獲取到ID選擇器
+	
+	9.JQuery正則校驗使用regex.test(XXX)
+	  Java正則校驗使用XXX.matches(regex)
+	  
+	10.@ModelAttribute若限制為有id的情況才調用
+		代表的是"請求參數"有攜帶id的話，才會調用
+		
+	11.[注意]
+		Shiro也會攔截靜態資源，需設定為可以匿名訪問
+			map.put("/static/**", "anon");
+			
+	12.實體類建立關聯關係屬性時:
+		1.)hibernate 在關聯關係操作中會使用內建的一個實例來代理，因此在配置關聯關係屬性時須設為父介面類型，才能讓該代理參考到。
+		2.)在此先創建一個實例，避免造成空指針異常。
+		ex: Set<TradeItem> tradeItems = new HashSet<>();
+		
+	13.jquery要獲取到radio類型的值須使用[]來包裹
+		$("#update_form :radio[name=gender]").val([result.jsonObject.account.gender]);
+		
+	14.@DateTimeFormat 將頁面傳過來的字串轉為指定格式的Date類型
+	
+	15.@Temporal 指定物件在數據庫中儲存的格式
+			
+[未能實現的功能]
+	在使用JQuery File Upload框架時，原本想做出可以指定欄位上傳檔案的效果(例如想只修改第二張圖片)，
+	但每次點及Add new File都會從第一張開始，有鑑於前端知識還不足，暫時只能不修改或是全部修改。
+	
