@@ -27,6 +27,8 @@ public class Trade {
 	private Date tradeTime;
 	private float tradeMoney;
 	private Account account;
+	//Set<TradeItem>: hibernate 在關聯關係操作中會使用內建的一個實例來代理，因此在配置關聯關係屬性時須設為父介面類型，才能讓該代理參考到。
+	//new HashSet<>(): 在此先創建一個實例，避免造成空指針異常。
 	private Set<TradeItem> tradeItems = new HashSet<>();
 
 	@Column(name="Trade_Money")

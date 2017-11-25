@@ -6,19 +6,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@ include file="/commons/commons-title.jsp" %>
-<style type="text/css">
-
-	.item_Div {
-		margin-top:10px;
-	}
-	
-</style>
+<link rel="stylesheet" href="static/shoppingWeb/checkout.css">
 <script type="text/javascript">
 
 	$(function(){
 	
 		var totalMoney = ${totalMoney};
-		var totalNumber = ${totalNumber};
 		
 		var userBalance = ${account.accountBalance.balance };
 		$("#user_balance_info").append($("<h4 id='sum_error'></h4>").append("Your Balance: $" + userBalance));
@@ -56,7 +49,7 @@
 						.append($("<p></p>")
 						.append($("<b></b>")
 						.append("Color: " + item.clothes.color + "&nbsp;&nbsp; | Size: " + itemSize + 
-								"&nbsp;&nbsp; | Quantity: " + item.quantity + "&nbsp;&nbsp; " + "$" + item.itemMoney)));
+								"&nbsp;&nbsp; | Quantity: " + item.quantity + "&nbsp;&nbsp;&nbsp;&nbsp; $ " + item.itemMoney)));
 				
 				$("<div class='page-header item_Div'></div>")
 						.append($("<div class='row errorMessage'></div>").attr("id", item.itemId)
@@ -86,7 +79,7 @@
 					if(undefined != result.jsonObject.sumError){
 						$("<b></b>")
 							.append($("<font color='red'></font>")
-							.append("&nbsp;&nbsp;&nbsp;" + result.jsonObject.sumError + " &nbsp;&nbsp;[ 應付金額為 $" + totalMoney + " ]"))
+							.append("&nbsp;&nbsp;&nbsp;" + result.jsonObject.sumError + " &nbsp;&nbsp;[ 應付金額為 $ " + totalMoney + " ]"))
 							.appendTo($("#sum_error"));
 					}
 				}
@@ -110,7 +103,7 @@
 	
 		<div class="col-md-offset-8 ">
 			<h4>
-				Amounts payable: $${totalMoney} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				Amounts payable: $ ${totalMoney} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<button class="btn btn-default" type="submit" id="confirm">Confirm</button>
 			</h4>
 		</div>

@@ -65,7 +65,9 @@ public class ClothesHandler {
 				clothesService.updateQty(sc, clothesId, size, quantity);
 			}
 			
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return JsonMsg.success();
 	}
@@ -93,7 +95,9 @@ public class ClothesHandler {
 				clothesService.updateSize(sc, clothesId, oldSize, newSize, quantity);
 			}
 			
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return JsonMsg.success();
 	}
@@ -110,8 +114,10 @@ public class ClothesHandler {
 			clothesId = Integer.parseInt(clothesIdStr);
 			size = Integer.parseInt(sizeStr);
 			
-			clothesService.remove(sc, clothesId, size);
-		} catch (Exception e) {}
+			clothesService.removeItem(sc, clothesId, size);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return JsonMsg.success();
 	}
@@ -139,7 +145,9 @@ public class ClothesHandler {
 			size = Integer.parseInt(sizeStr);
 			
 			clothesService.addToCart(sc, clothesId, size);
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return JsonMsg.success().add("shoppingCart", sc);
 	}
@@ -152,7 +160,9 @@ public class ClothesHandler {
 		
 		try {
 			clothesId = Integer.parseInt(clothesIdStr);
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		Clothes clothes = clothesService.getClothesById(clothesId);
 		if(clothes == null) {
@@ -182,28 +192,36 @@ public class ClothesHandler {
 			if(pageNo < 1) {
 				pageNo = 1;
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		try {
 			pageSize = Integer.parseInt(pageSizeStr);
 			if(pageSize < 6) {
 				pageSize = 6;
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		try {
 			minPrice = Float.parseFloat(minPriceStr);
 			if(minPrice < 0) {
 				minPrice = 0;
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		try {
 			maxPrice = Float.parseFloat(maxPriceStr);
 			if(maxPrice > Float.MAX_VALUE) {
 				maxPrice = Float.MAX_VALUE;
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		Page<Clothes> page = 
 			clothesService.getPageByCondition(pageNo, pageSize, minPrice, maxPrice, genderCondition, categoryCondition, queryCondition);
@@ -232,28 +250,36 @@ public class ClothesHandler {
 			if(pageNo < 1) {
 				pageNo = 1;
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		try {
 			pageSize = Integer.parseInt(pageSizeStr);
 			if(pageSize < 6) {
 				pageSize = 6;
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		try {
 			minPrice = Float.parseFloat(minPriceStr);
 			if(minPrice < 0) {
 				minPrice = 0;
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		try {
 			maxPrice = Float.parseFloat(maxPriceStr);
 			if(maxPrice > Float.MAX_VALUE) {
 				maxPrice = Float.MAX_VALUE;
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		Page<Clothes> page = 
 			clothesService.getPageByCondition(pageNo, pageSize, minPrice, maxPrice, genderCondition, categoryCondition, queryCondition);

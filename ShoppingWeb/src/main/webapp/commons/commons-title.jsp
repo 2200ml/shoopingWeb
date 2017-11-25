@@ -38,7 +38,6 @@
 		<div class="page-header">
 			<h1>Example page header <small>Subtext for header</small></h1>
 		</div>
-		
 			
 		<shiro:user>
 			<div class="col-md-12 user">

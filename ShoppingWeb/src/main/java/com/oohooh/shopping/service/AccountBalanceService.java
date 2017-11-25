@@ -34,7 +34,7 @@ public class AccountBalanceService {
 	@Autowired
 	private TradeItemRepository tradeItemRepository;
 	
-	@Transactional
+	@Transactional(readOnly=true)
 	public Account getAccount(String username) {
 		Account account = accountRepository.getByUsername(username);
 		return account;
@@ -54,7 +54,7 @@ public class AccountBalanceService {
 		for(ShoppingCartItem sci : sc.getItems()) {
 			int itemQty = sci.getQuantity();
 			int itemSize = sci.getSize();
-			int sizeStored = this.getStored(sci, itemSize);
+			int sizeStored = this.getStored(sci);
 			Integer clothesId = sci.getClothes().getClothesId();
 			Clothes clothes = clothesRepository.getByclothesId(clothesId);
 			
@@ -96,10 +96,11 @@ public class AccountBalanceService {
 	}
 
 	
-	@Transactional
-	public int getStored(ShoppingCartItem sci, int itemSize) {
+	@Transactional(readOnly=true)
+	public int getStored(ShoppingCartItem sci) {
 		Integer clothesId = sci.getClothes().getClothesId();
 		Clothes clothes = clothesRepository.getByclothesId(clothesId);
+		int itemSize = sci.getSize();
 		
 		int sizeStored = 0;
 		if(itemSize == 1) {

@@ -1,7 +1,3 @@
-<%@page import="java.util.Map"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -59,21 +55,24 @@
 				if($("#birth_day").val() == 0){
 					show_validate_msg("#birth_day", "error", "請選擇");
 					return false;
-				}else if($("#birth_day").val() != 0){
+				}
+				else if($("#birth_day").val() != 0){
 					show_validate_msg("#birth_day", "success", "");
 				}
 				
 				if($("#birth_month").val() == 0){
 					show_validate_msg("#birth_month", "error", "請選擇");
 					return false;
-				}else if($("#birth_month").val() != 0){
+				}
+				else if($("#birth_month").val() != 0){
 					show_validate_msg("#birth_month", "success", "");
 				}
 				
 				if($("#birth_year").val() == 0){
 					show_validate_msg("#birth_year", "error", "請選擇");
 					return false;
-				}else if($("#birth_year").val() != 0){
+				}
+				else if($("#birth_year").val() != 0){
 					show_validate_msg("#birth_year", "success", "");
 				}
 				
@@ -110,7 +109,8 @@
 				var args = {"username": val, "time": new Date()};
 				$.post(url, args, function(result){
 					if(result.code == 100){
-						show_validate_msg("#username", "success", "Username can use");
+						show_validate_msg("#username", "success", result.jsonObject.back_va);
+						//必須為SAVE按鈕添加屬性判斷username是否異常，否則按下SAVE按鈕username就算出異常還是可以繼續之後的步驟。
 						$(":submit").attr("ajax_va", "success");
 					}
 					else if(result.code == 200){
@@ -138,6 +138,7 @@
 			var email = $("#email").val();
 			var gender = $("#register_form :radio[name=gender]:checked").val();
 			var birth =  $("#birth_day").val() + "-" + $("#birth_month").val() + "-" + $("#birth_year").val();
+			
 			var url = "register";
 			var args = {"username":username, "password":password, "confirmPassword":confirmPassword,
 					"email":email, "gender":gender, "birth":birth};
@@ -260,12 +261,13 @@
 
 				<div class="col-sm-2">
 					<select class="form-control" id="birth_day"><option value="0">DD</option>
-						<c:forEach var="day" items="${days }">
+						<c:forEach var="day" items="${days}">
 						    <option value="${day}">${day}</option>
 						</c:forEach>
 					</select>
 					<span class="help-block"></span>
 				</div>
+				
 				<div class="col-sm-2">
 					<select class="form-control" id="birth_month"><option value="0">Month</option>
 						<option value="1">January</option><option value="2">February</option><option value="3">March</option>
@@ -278,7 +280,7 @@
 
 				<div class="col-sm-2">
 					<select class="form-control" id="birth_year"><option value="0">YYYY</option>
-						<c:forEach var="year" items="${years }">
+						<c:forEach var="year" items="${years}">
 						    <option value="${year}">${year}</option>
 						</c:forEach>
 					</select>

@@ -18,7 +18,7 @@ public class UploadService {
 		clothesRepository.saveAndFlush(clothes);
 	}
 
-	@Transactional
+	@Transactional(readOnly=true)
 	public Clothes getById(Integer clothesId) {
 		return clothesRepository.getByclothesId(clothesId);
 	}

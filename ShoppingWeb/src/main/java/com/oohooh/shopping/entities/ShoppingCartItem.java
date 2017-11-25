@@ -41,6 +41,9 @@ public class ShoppingCartItem {
 		this.clothes = clothes;
 		this.quantity = 1;
 	}
+	
+	public ShoppingCartItem() {
+	}
 
 	public Clothes getClothes() {
 		return clothes;

@@ -39,9 +39,9 @@ public class Account {
 	@NotEmpty(message = "不能空白")
 	private String password;
 
-	// @NotEmpty(message="不能空白")
 	private String confirmPassword;
 
+	//@DateTimeFormat 將頁面傳過來的字串轉為指定格式的Date類型
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	@Past
 	@NotNull(message = "請選擇")
@@ -110,6 +110,7 @@ public class Account {
 		this.email = email;
 	}
 
+	//@Temporal 指定物件在數據庫中儲存的格式
 	@Temporal(TemporalType.DATE)
 	public Date getBirth() {
 		return birth;

@@ -39,7 +39,9 @@ public class AccountHandler {
 	
 	@ResponseBody
 	@RequestMapping(value="/update/{id}", method=RequestMethod.PUT)
-	public JsonMsg update(@Valid Account account, BindingResult result, @RequestParam(value="password", required=false) String password) {
+	public JsonMsg update(@Valid Account account, BindingResult result) {
+		
+		String password = account.getPassword();
 		
 		if(result.hasErrors()) {
 			Map<String, Object> errorFields = new HashMap<>();
@@ -100,7 +102,7 @@ public class AccountHandler {
 		
 		Account account = accountService.getByUsername(username);
 		if(account == null) {
-			return JsonMsg.success();
+			return JsonMsg.success().add("back_va", "Username can use - server");
 		}else {
 			return JsonMsg.fail().add("back_va", "Username can\'t use - server");
 		}
@@ -108,8 +110,10 @@ public class AccountHandler {
 	
 	@ResponseBody
 	@RequestMapping(value="/register", method=RequestMethod.POST)
-	public JsonMsg save(@Valid Account account, BindingResult result, 
-			@RequestParam("password") String password, @RequestParam("confirmPassword") String confirmPassword) {
+	public JsonMsg save(@Valid Account account, BindingResult result) {
+		
+		String password = account.getPassword();
+		String confirmPassword = account.getConfirmPassword();
 		
 		if(!password.equals(confirmPassword)) {
 			FieldError confirmPasswordError = new FieldError("account", "confirmPassword" , "password »P confirmPassword ¤£¤@­P");
@@ -131,7 +135,7 @@ public class AccountHandler {
 	}
 	
 	@RequestMapping(value="/register", method=RequestMethod.GET)
-	public String input(Map<String, Object> map){
+	public String registerInput(Map<String, Object> map){
 		
 		List<Object> days = new ArrayList<Object>();
 		for(int i = 1; i <= 31; i++){

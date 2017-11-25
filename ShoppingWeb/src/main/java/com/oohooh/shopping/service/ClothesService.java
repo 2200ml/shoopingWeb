@@ -34,7 +34,7 @@ public class ClothesService {
 	}
 
 	@Transactional
-	public void addToCart(ShoppingCart sc, int clothesId, Integer size) {
+	public void addToCart(ShoppingCart sc, Integer clothesId, Integer size) {
 		Clothes clothes = clothesRepository.getByclothesId(clothesId);
 		
 		if(clothes != null) {
@@ -43,7 +43,7 @@ public class ClothesService {
 	}
 
 	@Transactional
-	public void remove(ShoppingCart sc, Integer clothesId, Integer size) {
+	public void removeItem(ShoppingCart sc, Integer clothesId, Integer size) {
 		Clothes clothes = clothesRepository.getByclothesId(clothesId);
 		
 		if(clothes != null) {

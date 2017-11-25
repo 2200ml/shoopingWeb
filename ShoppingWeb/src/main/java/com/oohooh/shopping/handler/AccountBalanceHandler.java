@@ -41,7 +41,7 @@ public class AccountBalanceHandler {
 		for(ShoppingCartItem sci : sc.getItems()) {
 			int itemQty = sci.getQuantity();
 			int itemSize = sci.getSize();
-			int sizeStored = accountBalanceService.getStored(sci, itemSize);
+			int sizeStored = accountBalanceService.getStored(sci);
 			
 			if(itemQty > sizeStored) {
 				//shoppingCartItem的stored屬性用來儲存商品的庫存

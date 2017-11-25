@@ -20,10 +20,11 @@
 		 	var args = {"username":username, "password":password, "rememberMe":rememberMe};
 			$.post(url, args, function(result){
 				if(result.code == 100){
-					//防止session失效
+					
 					if(undefined != result.jsonObject.url){
 						location.href = result.jsonObject.url;
 					}else{
+						//防止session失效時找不到savedRequest儲存的網頁
 						location.href = "myAccount.jsp";
 					}
 			    }

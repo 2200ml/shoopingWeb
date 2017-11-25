@@ -6,13 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@ include file="/commons/commons-title.jsp" %>
-<style type="text/css">
+<link rel="stylesheet" href="static/shoppingWeb/myOrders.css">
 
-	.glyphicon-list-alt {
-		font-size:24px;
-	}
-
-</style>
 <script type="text/javascript">
 
 	$(function(){

@@ -6,6 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@ include file="/commons/commons-title.jsp" %>
+<link rel="stylesheet" href="static/shoppingWeb/uploadItem.css">
+
 <link rel="stylesheet" href="static/jQuery-File-Upload-9.19.0/css/jquery.fileupload.css">
 <script src="static/jQuery-File-Upload-9.19.0/js/vendor/jquery.ui.widget.js"></script>
 <script src="static/jQuery-File-Upload-9.19.0/js/load-image.all.min.js"></script>
@@ -16,38 +18,11 @@
 <script src="static/jQuery-File-Upload-9.19.0/js/jquery.fileupload-image.js"></script>
 <script src="static/jQuery-File-Upload-9.19.0/js/jquery.fileupload-validate.js"></script>
 
-<!-- 以請求域中是否有clothesId來判斷是新增還是修改 -->
-<%
-	Integer clothesId = (Integer)request.getAttribute("clothesId");
-	if(clothesId == null){
-		request.setAttribute("clothesId", 0);
-	}
-%>
-
-<style type="text/css">
-
-	.center {
-	  width: auto;
-	  display: table;
-	  margin-left: auto;
-	  margin-right: auto;
-	}
-	.text-center {
-	  text-align: center;
-	}
-	
-	.imgPreview {
-		width:250px;
-		hight:300px;
-	}
-	
-</style>
-
 <script type="text/javascript">
 
 	$(function () {
 		
-		var clothesId = ${clothesId};
+		var clothesId = "${clothesId}";
 		
 		if(clothesId > 0){
 			var url = "clothesUpdate/" + clothesId;
@@ -55,6 +30,7 @@
 			var url = "uploadClothes";
 		}
 	    
+		//編輯時商品回顯
 		if(clothesId > 0){
 			var url2 = "clothesInfo";
 			var args = {"clothesId" : clothesId}
@@ -111,6 +87,7 @@
 	        maxFileSize: 999000,
 	        previewMaxWidth: 300,
 	        previewMaxHeight: 300,
+	        //限制一次上傳所有檔案
 	        singleFileUploads: false,
 	        maxNumberOfFiles: 4,
 
@@ -224,7 +201,7 @@
 	    })
 	    
 	    $(".fileinput-button").click(function(){
-				$(".imgPreview").attr("src", "static/imgs/grey.png");
+			$(".imgPreview").attr("src", "static/imgs/grey.png");
 		});
 	    
 	    function validate_add_form(){

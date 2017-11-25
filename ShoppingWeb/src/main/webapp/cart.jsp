@@ -6,39 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@ include file="/commons/commons-title.jsp" %>
-<style type="text/css">
-
-	.picDiv	{
-		width: 130px;
-	}
-	
-	.picDiv img {
-		height: 100%;
-		width: 100%;
-	}
-	
-	.glyphicon-briefcase {
-		font-size:24px;
-	}
-	
-	.remove_item {
-		color:black;
-	}
-	
-	.remove_item:hover{
-		color:black;
-	}
-	
-	.glyphicon-remove {
-		font-size:20px;
-	}
-	
-	.item_Div {
-		margin-top:15px;
-	}
-	
-	
-</style>
+<link rel="stylesheet" href="static/shoppingWeb/cart.css">
 
 <script type="text/javascript">
 
@@ -105,7 +73,7 @@
 						.append($("<option value='2'>M</option>"))
 						.append($("<option value='3'>L</option>"))
 						.append($("<option value='4'>XL</option>")).val(item.size)))
-						.append($("<label class='col-sm-1' >Qty</label>"))
+						.append($("<label class='col-sm-1'>Qty</label>"))
 						.append($("<div class='col-sm-3'></div>").append($("<select class='form-control select_qty'></select>")
 						.attr("clothesId", itemId)
 						.attr("sizeId", item.size)

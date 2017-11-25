@@ -1,5 +1,3 @@
-<%@page import="java.util.List"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -19,6 +17,7 @@
 				$("#username").text(result.jsonObject.account.username);
 				$("#accountBalance").text("$ " + result.jsonObject.account.accountBalance.balance);
 				$("#email").val(result.jsonObject.account.email);
+				//radio的值需要使用[]包裹
 				$("#update_form :radio[name=gender]").val([result.jsonObject.account.gender]);
 				$("#id").val(result.jsonObject.account.id)
 				

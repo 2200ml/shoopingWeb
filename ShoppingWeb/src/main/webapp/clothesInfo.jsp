@@ -6,36 +6,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@ include file="/commons/commons-title.jsp" %>
-<style type="text/css">
-	.carousel {
-    	height: 655px;
-    	width: 513px;
-	}
-	
-	.carousel-control.left, .carousel-control.right {
-	   background-image:none;
-	}
-	
-	.imgSize {
-		height: 60px; 
-		width: 48px;
-	}
-	
-	.imgSize img {
-		width: 100%;
-		height: 100;
-	}
-	
-	 ol li {
-		list-style-type:none;
-	}
-
-</style>
+<link rel="stylesheet" href="static/shoppingWeb/clothesInfo.css">
 </head>
 <script type="text/javascript">
 
 	$(function(){
 		
+		//jquery要獲取參數值,使用param.XXX
 		var clothesId = ${param.clothesId};
 		var url = "clothesInfo";
 		var args = {"clothesId":clothesId};
@@ -96,8 +73,6 @@
 				$("#select_size").parent().addClass("has-error");
 				$("#select_size").next("span").text("Please select");
 				return false;
-			}else{
-				$("#select_size").next("span").text("");
 			}
 			
 			var url = "addToCart";

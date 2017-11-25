@@ -29,7 +29,7 @@ public class TradeService {
 	@Autowired
 	private TradeRepository tradeRepository;
 	
-	@Transactional
+	@Transactional(readOnly=true)
 	public Page<Trade> getPage(int pageNo, int pageSize, String username) {
 		
 		Account account = accountRepository.getByUsername(username);

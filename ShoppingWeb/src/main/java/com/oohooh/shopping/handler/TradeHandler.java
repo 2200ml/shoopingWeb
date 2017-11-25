@@ -25,8 +25,7 @@ public class TradeHandler {
 	
 	@ResponseBody
 	@RequestMapping("/showTrade")
-	public JsonMsg showTrade(@RequestParam(name="pageNo", required = false, defaultValue = "1") String pageNoStr,
-			@RequestParam(name="pageSize", required = false, defaultValue = "5") String pageSizeStr, HttpServletRequest request) {
+	public JsonMsg showTrade(@RequestParam(name="pageNo", required = false, defaultValue = "1") String pageNoStr, HttpServletRequest request) {
 		
 		int pageNo = 1;
 		int pageSize = 5;
@@ -36,14 +35,9 @@ public class TradeHandler {
 			if(pageNo < 1) {
 				pageNo = 1;
 			}
-		} catch (Exception e) {}
-		
-		try {
-			pageSize = Integer.parseInt(pageSizeStr);
-			if(pageSize < 5) {
-				pageSize = 5;
-			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		String username = (String) request.getSession().getAttribute("username");
 		
@@ -65,14 +59,18 @@ public class TradeHandler {
 			if(pageNo < 1) {
 				pageNo = 1;
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		try {
 			pageSize = Integer.parseInt(pageSizeStr);
 			if(pageSize < 5) {
 				pageSize = 5;
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		String username = (String) request.getSession().getAttribute("username");
 		

@@ -10,13 +10,14 @@ public class ShoppingCart {
 	private Map<Integer, ShoppingCartItem> clothesMap = new HashMap<>();
 	
 	public void addClothes(Clothes clothes, Integer size) {
-		ShoppingCartItem sci = clothesMap.get(clothes.getClothesId() * 4 + size);
+		Integer cartItemId = clothes.getClothesId() * 4 + size;
+		ShoppingCartItem sci = clothesMap.get(cartItemId);
 		
 		if(sci == null) {
 			sci = new ShoppingCartItem(clothes);
 			sci.setItemId(size, clothes);
 			sci.setSize(size);
-			clothesMap.put(clothes.getClothesId() * 4 + size, sci);
+			clothesMap.put(cartItemId, sci);
 			
 		}else if(sci != null){
 			
@@ -27,15 +28,11 @@ public class ShoppingCart {
 				ShoppingCartItem sci2 = new ShoppingCartItem(clothes);
 				sci2.setItemId(size, clothes);
 				sci2.setSize(size);
-				clothesMap.put(clothes.getClothesId() * 4 + size, sci2);
+				clothesMap.put(cartItemId, sci2);
 			}
 		}
 		
 	}
-	
-//	public boolean hasClothes(Integer id) {
-//		return clothesMap.containsKey(id);
-//	}
 	
 	public Map<Integer, ShoppingCartItem> getClothesMap() {
 		return clothesMap;
@@ -61,10 +58,6 @@ public class ShoppingCart {
 		}
 		return total;
 	}
-	 
-//	public boolean isEmpty() {
-//		return clothesMap.isEmpty();
-//	}
 	
 	public void clear() {
 		clothesMap.clear();

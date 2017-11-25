@@ -16,12 +16,12 @@ public class AccountService {
 	@Autowired
 	private AccountRepository accountRepository;
 	
-	@Transactional
+	@Transactional(readOnly=true)
 	public Account getByUsername(String username) {
 		return accountRepository.getByUsername(username);
 	}
 	
-	@Transactional
+	@Transactional(readOnly=true)
 	public Account getById(Integer id) {
 		return accountRepository.getById(id);
 	}

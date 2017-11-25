@@ -3,7 +3,6 @@ package com.oohooh.shopping.entities;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Table(name="Account_Balance")

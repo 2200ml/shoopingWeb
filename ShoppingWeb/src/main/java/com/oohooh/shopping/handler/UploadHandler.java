@@ -35,12 +35,13 @@ public class UploadHandler {
 		int clothesId = -1;
 		try {
 			clothesId = Integer.parseInt(clothesIdStr);
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		if(clothesId > 0) {
 			Clothes clothes = uploadService.getById(clothesId);
 			map.put("clothes", clothes);
-			System.out.println("ModelAttribute...");
 		}
 	}
 	
@@ -68,7 +69,7 @@ public class UploadHandler {
 			File oldFileFolder = new File(picPath + oldFolderName);
 			
 			if(oldFileFolder.exists()) {
-//				FileUtils.forceDelete(oldFileFolder);
+//				FileUtils.forceDelete(oldFileFolder); 使用FileUtils API刪除檔案的方法
 				ShoppingWebUtil.deleteFile(oldFileFolder);
 			}
 			
@@ -121,46 +122,17 @@ public class UploadHandler {
 		int clothesId = -1;
 		try {
 			clothesId = Integer.parseInt(clothesIdStr);
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		map.put("clothesId", clothesId);
 		return "WEB-INF/views/uploadItem";
 	}
 	
-//	@ResponseBody
-//	@RequestMapping("/testUpload")
-//	public JsonMsg testUpload(@RequestParam(name="files[]") MultipartFile[] files,
-//							  @RequestParam(name="testName", required=false) String testName) throws IOException {
-//		
-//		String picPath = "D:\\uploadFiles\\pic\\";
-//		
-//		if(files != null && files.length > 0) {
-//			
-//			String firstOriginalFilename = files[0].getOriginalFilename();
-//			
-//			String folderName = new Date().getTime() + "-" +firstOriginalFilename.substring(0, firstOriginalFilename.lastIndexOf("."));
-//			System.out.println("folderName: " + folderName);
-//			
-//			File fileFolder = new File(picPath + folderName); 
-//			if(!fileFolder.exists()) {
-//				fileFolder.mkdirs();
-//			}
-//			
-//			for(MultipartFile file : files){
-//				String originalFilename = file.getOriginalFilename();
-//				System.out.println("originalFilename: " + originalFilename);
-//				
-//				File newFile = new File(picPath + folderName + "\\" + originalFilename);
-//				file.transferTo(newFile);
-//			}
-//		}
-//		
-//		return JsonMsg.success();
-//	}
-	
 	@ResponseBody
 	@RequestMapping("/uploadClothes")
-	public JsonMsg uploadClothes(Clothes clothes, @RequestParam(name="files[]", required=false) MultipartFile[] files) throws IOException {
+	public JsonMsg uploadClothes(Clothes clothes, @RequestParam(name="files[]", required=true) MultipartFile[] files) throws IOException {
 		String picPath = "D:\\uploadFiles\\pic\\";
 		
 		if(files != null && files.length > 0) {
@@ -183,7 +155,7 @@ public class UploadHandler {
 				String originalFilename = file.getOriginalFilename();
 				String newFileName = folderName + "\\" + originalFilename;
 				File newFile = new File(picPath + newFileName);
-				//file.transferTo() 存放資料夾的方法
+				//file.transferTo() 把檔案存放進資料夾的方法
 				file.transferTo(newFile);
 				picList.add(newFileName);
 			}
