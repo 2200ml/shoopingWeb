@@ -12,8 +12,7 @@
 
 	$(function(){
 		
-		//jquery要獲取參數值,使用param.XXX
-		var clothesId = ${param.clothesId};
+		var clothesId = ${clothesId};
 		var url = "clothesInfo";
 		var args = {"clothesId":clothesId};
 		
@@ -117,12 +116,12 @@
 					<br><br>
 					<a href ="" class="btn btn-warning" id="edit_btn" role="button">
 						<i class="glyphicon glyphicon-pencil"></i>
-						<span>Edit</span>
+						<span><fmt:message key="i18n.edit"></fmt:message></span>
 					</a>
 					
 					<button class="btn btn-danger" id="delete_btn">
 						<i class="glyphicon glyphicon-remove"></i>
-						<span>Delete</span>
+						<span><fmt:message key="i18n.delete"></fmt:message></span>
 					</button>
 				</div>
 			</shiro:authenticated>
@@ -132,12 +131,12 @@
 					<br><br>
 					<button class="btn btn-warning" disabled="disabled">
 						<i class="glyphicon glyphicon-pencil"></i>
-						<span>Edit</span>
+						<span><fmt:message key="i18n.edit"></fmt:message></span>
 					</button>
 					
 					<button class="btn btn-danger" disabled="disabled">
 						<i class="glyphicon glyphicon-remove"></i>
-						<span>Delete</span>
+						<span><fmt:message key="i18n.delete"></fmt:message></span>
 					</button>
 				</div>
 			</shiro:notAuthenticated>
@@ -176,12 +175,12 @@
 				 	<h2 id="item_Name"></h2>
 				 	<h3><b><span id="item_price"></span></b></h3>
 				 	<br>
-				 	<h4>color:&nbsp;&nbsp;<span id="item_color"></span></h4>
+				 	<h4><fmt:message key="i18n.color"></fmt:message>:&nbsp;&nbsp;<span id="item_color"></span></h4>
 				 </div>
 				 
 			 	<div class="col-md-8 col-md-offset-2">
-			 		<h4>size:</h4>	
-					<select class="form-control" id="select_size"><option value="0">Please select</option>
+			 		<h4><fmt:message key="i18n.size"></fmt:message>:</h4>	
+					<select class="form-control" id="select_size"><option value="0"><fmt:message key="i18n.select"></fmt:message></option>
 						<option value="1">S</option>
 						<option value="2">M</option>
 						<option value="3">L</option>
@@ -192,7 +191,9 @@
 				
 				<div class="col-md-8 col-md-offset-2">
 					<br>
-					<button type="button" class="btn btn-primary btn-block" id="add_to_Cart_btn">ADD TO BAG</button>
+					<button type="button" class="btn btn-primary btn-block" id="add_to_Cart_btn">
+						<fmt:message key="i18n.addToBag"></fmt:message>
+					</button>
 				</div>
 				
 	 		</div>

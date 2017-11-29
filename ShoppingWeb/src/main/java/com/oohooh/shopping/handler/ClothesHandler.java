@@ -3,6 +3,7 @@ package com.oohooh.shopping.handler;
 import java.io.File;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +28,17 @@ public class ClothesHandler {
 
 	@Autowired
 	private ClothesService clothesService;
+	
+	@RequestMapping("/clothesInfo/{id}")
+	public String clothesInfoPage(@PathVariable("id") String idStr, Map<String, Object> map) {
+		map.put("clothesId", idStr);
+		return "clothesInfo";
+	}
+	
+	@RequestMapping("/cart")
+	public String cartPage() {
+		return "cart";
+	}
 	
 	@ResponseBody
 	@RequestMapping("deleteClothes")
@@ -65,9 +78,7 @@ public class ClothesHandler {
 				clothesService.updateQty(sc, clothesId, size, quantity);
 			}
 			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		return JsonMsg.success();
 	}
@@ -95,9 +106,7 @@ public class ClothesHandler {
 				clothesService.updateSize(sc, clothesId, oldSize, newSize, quantity);
 			}
 			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		return JsonMsg.success();
 	}
@@ -115,9 +124,7 @@ public class ClothesHandler {
 			size = Integer.parseInt(sizeStr);
 			
 			clothesService.removeItem(sc, clothesId, size);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		return JsonMsg.success();
 	}
@@ -145,9 +152,7 @@ public class ClothesHandler {
 			size = Integer.parseInt(sizeStr);
 			
 			clothesService.addToCart(sc, clothesId, size);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		return JsonMsg.success().add("shoppingCart", sc);
 	}
@@ -160,9 +165,7 @@ public class ClothesHandler {
 		
 		try {
 			clothesId = Integer.parseInt(clothesIdStr);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		Clothes clothes = clothesService.getClothesById(clothesId);
 		if(clothes == null) {
@@ -192,36 +195,28 @@ public class ClothesHandler {
 			if(pageNo < 1) {
 				pageNo = 1;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		try {
 			pageSize = Integer.parseInt(pageSizeStr);
 			if(pageSize < 6) {
 				pageSize = 6;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		try {
 			minPrice = Float.parseFloat(minPriceStr);
 			if(minPrice < 0) {
 				minPrice = 0;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		try {
 			maxPrice = Float.parseFloat(maxPriceStr);
 			if(maxPrice > Float.MAX_VALUE) {
 				maxPrice = Float.MAX_VALUE;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		Page<Clothes> page = 
 			clothesService.getPageByCondition(pageNo, pageSize, minPrice, maxPrice, genderCondition, categoryCondition, queryCondition);
@@ -238,6 +233,8 @@ public class ClothesHandler {
 			@RequestParam(value="genderCondition", required=false) String genderCondition,
 			@RequestParam(value="categoryCondition", required=false) String categoryCondition,
 			@RequestParam(value="queryCondition", required=false) String queryCondition,
+			HttpServletRequest request,
+			Locale locale,
 			Map<String, Object> map) {
 		
 		int pageNo = 1;
@@ -250,41 +247,35 @@ public class ClothesHandler {
 			if(pageNo < 1) {
 				pageNo = 1;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		try {
 			pageSize = Integer.parseInt(pageSizeStr);
 			if(pageSize < 6) {
 				pageSize = 6;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		try {
 			minPrice = Float.parseFloat(minPriceStr);
 			if(minPrice < 0) {
 				minPrice = 0;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		try {
 			maxPrice = Float.parseFloat(maxPriceStr);
 			if(maxPrice > Float.MAX_VALUE) {
 				maxPrice = Float.MAX_VALUE;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		Page<Clothes> page = 
 			clothesService.getPageByCondition(pageNo, pageSize, minPrice, maxPrice, genderCondition, categoryCondition, queryCondition);
 		
 		List<Integer> navigateNum = ShoppingWebUtil.getNavigateNumber(page);
+		
+		request.getSession().setAttribute("locale", locale);
 		
 		map.put("page", page);
 		map.put("navigateNum", navigateNum);

@@ -15,7 +15,7 @@
 		<br><br>
 		
 		<div class="col-md-offset-4">
-			<h2>Welcome !! <b><shiro:principal></shiro:principal></b></h2>
+			<h2><fmt:message key="i18n.welcome"></fmt:message> <b><shiro:principal></shiro:principal></b></h2>
 			<br>
 		</div>
 		
@@ -24,7 +24,8 @@
 		<div class="row">
 			<div class="col-md-5 col-md-offset-3">
 				<a href ="member" class="btn btn-default btn-block " role="button">
-					<span class="glyphicon glyphicon-user pull-left" style='font-size:20px'></span>My details & Change
+					<span class="glyphicon glyphicon-user pull-left" style='font-size:20px'></span>
+					<fmt:message key="i18n.myDetails"></fmt:message>
 				</a>
 				<br>
 			</div>
@@ -33,7 +34,8 @@
 		<div class="row">
 			<div class="col-md-5 col-md-offset-3">
 				<a href ="myOrders" class="btn btn-default btn-block" role="button">
-					<span class="glyphicon glyphicon-list-alt pull-left" style='font-size:20px'></span>My Orders
+					<span class="glyphicon glyphicon-list-alt pull-left" style='font-size:20px'></span>
+					<fmt:message key="i18n.myOrders"></fmt:message>
 				</a>
 			</div>
 		</div>

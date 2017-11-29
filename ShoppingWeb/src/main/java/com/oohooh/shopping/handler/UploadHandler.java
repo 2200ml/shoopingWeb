@@ -35,9 +35,7 @@ public class UploadHandler {
 		int clothesId = -1;
 		try {
 			clothesId = Integer.parseInt(clothesIdStr);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		if(clothesId > 0) {
 			Clothes clothes = uploadService.getById(clothesId);
@@ -122,9 +120,7 @@ public class UploadHandler {
 		int clothesId = -1;
 		try {
 			clothesId = Integer.parseInt(clothesIdStr);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		map.put("clothesId", clothesId);
 		return "WEB-INF/views/uploadItem";

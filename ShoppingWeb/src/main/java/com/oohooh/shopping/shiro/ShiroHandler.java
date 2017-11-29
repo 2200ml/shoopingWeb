@@ -20,6 +20,11 @@ import com.oohooh.shopping.utils.JsonMsg;
 @Controller
 public class ShiroHandler {
 	
+	@RequestMapping("/login")
+	public String loginPage() {
+		return "login";
+	}
+	
 	@ResponseBody
 	@RequestMapping("/shiroLogin")
 	public JsonMsg login(@RequestParam("username") String username, @RequestParam("password") String password,

@@ -206,14 +206,14 @@
 		<br><br>
 		
 		<div class="col-md-offset-5">
-			<h2>Register</h2>
+			<h2><fmt:message key="i18n.register"></fmt:message></h2>
 			<br>
 		</div>
 		
 		<form class="form-horizontal col-md-offset-2" id="register_form">
 		
 			<div class="form-group">
-				<label for="username" class="col-sm-2 control-label">Username</label>
+				<label for="username" class="col-sm-2 control-label"><fmt:message key="i18n.username"></fmt:message></label>
 				<div class="col-sm-6">
 					<input type="text" class="form-control" id="username" name="username" placeholder="Username (size:6-16)">
 					<span class="help-block"></span>
@@ -221,7 +221,7 @@
 			</div>
 			
 			<div class="form-group">
-				<label for="password" class="col-sm-2 control-label">Password</label>
+				<label for="password" class="col-sm-2 control-label"><fmt:message key="i18n.password"></fmt:message></label>
 				<div class="col-sm-6">
 					<input type="password" class="form-control" id="password" name="password" placeholder="Password (size:6-16)">
 					<span class="help-block"></span>
@@ -229,7 +229,7 @@
 			</div>
 			
 			<div class="form-group">
-				<label for="confirmPassword" class="col-sm-2 control-label">ConfirmPassword</label>
+				<label for="confirmPassword" class="col-sm-2 control-label"><fmt:message key="i18n.confirmPassword"></fmt:message></label>
 				<div class="col-sm-6">
 					<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="confirmPassword (size:6-16)">
 					<span class="help-block"></span>
@@ -237,7 +237,7 @@
 			</div>
 			
 			<div class="form-group">
-				<label for="email" class="col-sm-2 control-label">Email</label>
+				<label for="email" class="col-sm-2 control-label"><fmt:message key="i18n.email"></fmt:message></label>
 				<div class="col-sm-6">
 					<input type="text" class="form-control" id="email" name="email" placeholder="XXX@XXX.XXX">
 					<span  class="help-block"></span>
@@ -245,19 +245,21 @@
 			</div>
 			
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Gender</label>
+				<label class="col-sm-2 control-label"><fmt:message key="i18n.gender"></fmt:message></label>
 				<div class="col-sm-6">
 					<label class="radio-inline">
-					  <input type="radio" name="gender" id="genderM" value="Male" checked="checked"> Male
+					  <input type="radio" name="gender" id="genderM" value="Male" checked="checked">
+					  <fmt:message key="i18n.male"></fmt:message>
 					</label>
 					<label class="radio-inline">
-					  <input type="radio" name="gender" id="genderF" value="Female"> Female
+					  <input type="radio" name="gender" id="genderF" value="Female">
+					  <fmt:message key="i18n.female"></fmt:message>
 					</label>
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<label for="birth" class="col-sm-2 control-label">Birth</label>
+				<label for="birth" class="col-sm-2 control-label"><fmt:message key="i18n.birth"></fmt:message></label>
 
 				<div class="col-sm-2">
 					<select class="form-control" id="birth_day"><option value="0">DD</option>
@@ -297,7 +299,7 @@
 			
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-default">Save</button>
+					<button type="submit" class="btn btn-default"><fmt:message key="i18n.register"></fmt:message></button>
 				</div>
 			</div>
 			

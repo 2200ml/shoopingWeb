@@ -61,7 +61,7 @@
 																  .append($("<p><b>$"+ item.price + "</b></p>"));
 					
 					//使用虛擬路徑的方式存取圖片 /pic/
-					var img = $("<a href='#'></a>").attr("href", "clothesInfo.jsp?clothesId=" + item.clothesId)
+					var img = $("<a href='#'></a>").attr("href", "clothesInfo/" + item.clothesId)
 								.append($("<div class='itemImgSize'></div>")
 								.append($("<img src='/pic/" + item.picture.pic1 + "'>"))); 
 					
@@ -88,7 +88,9 @@
 				
 				var firstLi = $("<li></li>").append($("<a></a>").append("1")
 						.attr("href", "shoppingPage?pageNo=" + 1 + pageParameter));
-				var previousLi = $("<li></li>").append($("<a></a>").append("&laquo; Previous")
+				var previousLi = $("<li></li>").append($("<a></a>")
+						.append("<fmt:message key='i18n.previous'></fmt:message>")
+// 						.append("&laquo; Previous")
 						.attr("href", "shoppingPage?pageNo="+ previousNo + pageParameter));
 				
 				var prePointLi = $("<li class='prePointLi'></li>").append($("<a></a>").append("<b>...</b>"));
@@ -114,7 +116,9 @@
 				var nextNo = ${page.number} + 1 + 1;
 				var totalPages = ${page.totalPages};
 				
-				var nextLi = $("<li></li>").append($("<a></a>").append("Next &raquo;")
+				var nextLi = $("<li></li>").append($("<a></a>")
+						.append("<fmt:message key='i18n.next'></fmt:message>")
+// 						.append("Next &raquo;")
 						.attr("href", "shoppingPage?pageNo="+ nextNo + pageParameter));
 				var lastLi = $("<li></li>").append($("<a></a>").append(totalPages)
 						.attr("href", "shoppingPage?pageNo="+ totalPages + pageParameter));
@@ -230,33 +234,33 @@
 			  <input type="hidden" name="genderCondition" value="${genderCondition }"/>
 			  <input type="hidden" name="categoryCondition" value="${categoryCondition }"/>
 			  <input type="hidden" name="queryCondition" value="${queryCondition }"/>
-			  <a href="#" id="price_Filter"><button class="btn btn-primary">Filter</button></a>
+			  <a href="#" id="price_Filter"><button class="btn btn-primary"><fmt:message key="i18n.filter"></fmt:message></button></a>
 			</form>
 			
 			<div class="col-md-4 page_change">
-				<span class="grey_font pull-right">${page.totalElements } result | 
+				<span class="grey_font pull-right">${page.totalElements } <fmt:message key="i18n.result"></fmt:message> | 
 					<c:if test="${page.size == 6 }">
 						<span class="grey_font">
-							<a href="" id="12_page">view 12 per page</a>
+							<a href="" id="12_page"><fmt:message key="i18n.view12PerPage"></fmt:message></a>
 						</span> |
 						<span class="grey_font">
-							<a href="" id="24_page">view 24 per page</a>
+							<a href="" id="24_page"><fmt:message key="i18n.view24PerPage"></fmt:message></a>
 						</span> 
 					</c:if>
 					<c:if test="${page.size == 12 }">
 						<span class="grey_font">
-							<a href="" id="6_page">view 6 per page</a>
+							<a href="" id="6_page"><fmt:message key="i18n.view6PerPage"></fmt:message></a>
 						</span> |
 						<span class="grey_font">
-							<a href="" id="24_page">view 24 per page</a>
+							<a href="" id="24_page"><fmt:message key="i18n.view24PerPage"></fmt:message></a>
 						</span> 
 					</c:if>
 					<c:if test="${page.size == 24 }">
 						<span class="grey_font">
-							<a href="" id="6_page">view 6 per page</a>
+							<a href="" id="6_page"><fmt:message key="i18n.view6PerPage"></fmt:message></a>
 						</span> |
 						<span class="grey_font">
-							<a href="" id="12_page">view 12 per page</a>
+							<a href="" id="12_page"><fmt:message key="i18n.view12PerPage"></fmt:message></a>
 						</span> 
 					</c:if>
 				</span>

@@ -23,7 +23,7 @@
 				
 			$("<div class='text-center'>").append($("<div class='foot_height'></div>"))
 					.append($("<span class='glyphicon glyphicon-briefcase'></span>"))
-					.append($("<h3><b>Your bag is empty</b></h3>"))
+					.append($("<h3><b><fmt:message key='i18n.bagEmpty'></fmt:message></b></h3>"))
 					.appendTo($("#content"));
 			return;
 		}
@@ -156,23 +156,26 @@
 		<div class="row" id="content">
 			<div class="col-md-8" id="cart_Items">
 				<div class="page-header">
-					<h3><b>MY BAG </b><small class="col-md-offset-6">Items are reserved for 60 minutes</small></h3>
+					<h3>
+						<b><fmt:message key="i18n.myBag"></fmt:message></b>
+						<small class="col-md-offset-6"><fmt:message key="i18n.itemReserved"></fmt:message></small>
+					</h3>
 				</div>
 			</div>
 			
 			<div class="col-md-4">
 				<div class="page-header">
-					<h3><b>TOTAL </b></h3>
+					<h3><b><fmt:message key="i18n.total"></fmt:message></b></h3>
 				</div>
 				<div>
-					<h4><b>Sub-total</b><span class="col-md-offset-6" id="cart_total_money"></span></h4>
+					<h4><b><fmt:message key="i18n.subTotal"></fmt:message></b><span class="col-md-offset-6" id="cart_total_money"></span></h4>
 				</div>
 				<br>
 				<div>
-					<h4><b>Total-number</b><span class="col-md-offset-6" id="cart_total_number"></span></h4>
+					<h4><b><fmt:message key="i18n.totalNumber"></fmt:message></b><span class="col-md-offset-6" id="cart_total_number"></span></h4>
 				</div>
 				<br><br>
-				<a href ="" class="btn btn-success btn-block btn-lg" id="check_out" role="button">CHECK OUT</a>
+				<a href ="" class="btn btn-success btn-block btn-lg" id="check_out" role="button"><fmt:message key="i18n.checkout"></fmt:message></a>
 			</div>
 		</div>
 		

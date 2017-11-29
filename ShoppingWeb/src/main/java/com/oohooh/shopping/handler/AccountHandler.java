@@ -37,6 +37,11 @@ public class AccountHandler {
 		}
 	}
 	
+	@RequestMapping("/myAccount")
+	public String myAccountPage() {
+		return "myAccount";
+	}
+	
 	@ResponseBody
 	@RequestMapping(value="/update/{id}", method=RequestMethod.PUT)
 	public JsonMsg update(@Valid Account account, BindingResult result) {

@@ -14,7 +14,8 @@
 		var totalMoney = ${totalMoney};
 		
 		var userBalance = ${account.accountBalance.balance };
-		$("#user_balance_info").append($("<h4 id='sum_error'></h4>").append("Your Balance: $" + userBalance));
+		$("#user_balance_info").append($("<h4 id='sum_error'></h4>")
+							   .append("<fmt:message key='i18n.yourBalance'></fmt:message>: $ " + userBalance));
 		
 		get_cart_info();
 		
@@ -48,8 +49,10 @@
 						.append($("<h4></h4>").append(item.clothes.clothesName))
 						.append($("<p></p>")
 						.append($("<b></b>")
-						.append("Color: " + item.clothes.color + "&nbsp;&nbsp; | Size: " + itemSize + 
-								"&nbsp;&nbsp; | Quantity: " + item.quantity + "&nbsp;&nbsp;&nbsp;&nbsp; $ " + item.itemMoney)));
+						.append("<fmt:message key='i18n.color'></fmt:message>: " + item.clothes.color + 
+								"&nbsp;&nbsp; | <fmt:message key='i18n.size'></fmt:message>: " + itemSize + 
+								"&nbsp;&nbsp; | <fmt:message key='i18n.quantity'></fmt:message>: " + item.quantity + 
+								"&nbsp;&nbsp;&nbsp;&nbsp; $ " + item.itemMoney)));
 				
 				$("<div class='page-header item_Div'></div>")
 						.append($("<div class='row errorMessage'></div>").attr("id", item.itemId)
@@ -103,8 +106,8 @@
 	
 		<div class="col-md-offset-8 ">
 			<h4>
-				Amounts payable: $ ${totalMoney} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button class="btn btn-default" type="submit" id="confirm">Confirm</button>
+				<fmt:message key="i18n.payable"></fmt:message>: $ ${totalMoney} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button class="btn btn-default" type="submit" id="confirm"><fmt:message key="i18n.confirm"></fmt:message></button>
 			</h4>
 		</div>
 		

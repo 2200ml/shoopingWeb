@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.Date" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,10 +53,12 @@
 				
 				var itemsDiv = $("<div class='panel-body items'></div>");
 				
-				var tradeInfoDiv = $("<div class='panel-heading tradeTitle'></div>").append($("<h4></h4>").append($("<b>Trade ID: <font color='red'>" + item.tradeId + 
-							"</font> &nbsp;&nbsp; | &nbsp;&nbsp; Trade Time: <font color='red'>" + tradeTime + 
-							"</font> &nbsp;&nbsp; | &nbsp;&nbsp; Total Money: <font color='red'>$" + item.tradeMoney + 
-							"</font></b>")));
+				var tradeInfoDiv = $("<div class='panel-heading tradeTitle'></div>").append($("<h4></h4>")
+							.append($("<b><fmt:message key='i18n.trade'></fmt:message> ID: <font color='red'>" + item.tradeId + 
+							"</font> &nbsp;&nbsp; | &nbsp;&nbsp; <fmt:message key='i18n.tradeTime'></fmt:message>: <font color='red'>" 
+							+ tradeTime + 
+							"</font> &nbsp;&nbsp; | &nbsp;&nbsp; <fmt:message key='i18n.totalMoney'></fmt:message>: <font color='red'>$"
+							+ item.tradeMoney + "</font></b>")));
 				
 				var tradeItems = item.tradeItems;
 				$.each(tradeItems, function(index, item){
@@ -64,10 +67,10 @@
 							.append($("<h4></h4>").append(item.clothesName))
 							.append($("<p></p>")
 							.append($("<b></b>")
-							.append("&nbsp;&nbsp;&nbsp; Color: " + item.color + 
-									"&nbsp;&nbsp; | &nbsp; Size: " + item.size + 
-									"&nbsp;&nbsp; | &nbsp; Gender: " + item.gender + 
-									"&nbsp;&nbsp; | &nbsp; Quantity: " + item.quantity)));
+							.append("&nbsp;&nbsp;&nbsp; <fmt:message key='i18n.color'></fmt:message>: " + item.color + 
+									"&nbsp;&nbsp; | &nbsp; <fmt:message key='i18n.size'></fmt:message>: " + item.size + 
+									"&nbsp;&nbsp; | &nbsp; <fmt:message key='i18n.gender'></fmt:message>: " + item.gender + 
+									"&nbsp;&nbsp; | &nbsp; <fmt:message key='i18n.quantity'></fmt:message>: " + item.quantity)));
 					
 					itemInfoDiv.appendTo(itemsDiv);
 				});

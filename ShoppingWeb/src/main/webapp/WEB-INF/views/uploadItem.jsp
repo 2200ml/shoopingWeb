@@ -323,7 +323,7 @@
 					    		<img src="static/imgs/grey.png" class="imgPreview">
 					    	</div>
 				      		<div class="caption">
-				        		<p><b>預覽圖</b></p>
+				        		<p><b><fmt:message key="i18n.preview"></fmt:message></b></p>
 				      		</div>
 					    </div>
 		    		</div>
@@ -334,7 +334,7 @@
 					    		<img src="static/imgs/grey.png" class="imgPreview">
 					    	</div>
 				      		<div class="caption">
-				        		<p><b>附圖P1</b></p>
+				        		<p><b><fmt:message key="i18n.pic"></fmt:message>1</b></p>
 				      		</div>
 					    </div>
 		    		</div>
@@ -345,7 +345,7 @@
 					    		<img src="static/imgs/grey.png" class="imgPreview">
 					    	</div>
 				      		<div class="caption">
-				        		<p><b>附圖P2</b></p>
+				        		<p><b><fmt:message key="i18n.pic"></fmt:message>2</b></p>
 				      		</div>
 					    </div>
 		    		</div>
@@ -356,7 +356,7 @@
 					    		<img src="static/imgs/grey.png" class="imgPreview">
 					    	</div>
 				      		<div class="caption">
-				        		<p><b>附圖P3</b></p>
+				        		<p><b><fmt:message key="i18n.pic"></fmt:message>3</b></p>
 				      		</div>
 					    </div>
 		    		</div>
@@ -378,7 +378,7 @@
 				<div class="col-md-6" id="btn_area">
 					<button class="btn btn-success fileinput-button">
 				        <i class="glyphicon glyphicon-plus"></i>
-				        <span>Add files...</span>
+				        <span><fmt:message key="i18n.addFiles"></fmt:message>...</span>
 				        <input id="fileupload" type="file" name="files[]" multiple>
 				    </button>
 			    </div>
@@ -386,7 +386,7 @@
 			</div>
 
 			<div class="form-group">
-				<label for="clothesName" class="col-md-3 control-label">Clothes Name</label>
+				<label for="clothesName" class="col-md-3 control-label"><fmt:message key="i18n.clothesName"></fmt:message></label>
 				<div class="col-md-6">
 					<input type="text" class="form-control" id="clothesName" name="clothesName" placeholder="Clothes Name">
 					<span class="help-block"></span>
@@ -394,7 +394,7 @@
 			</div>
 			
 			<div class="form-group">
-				<label for="brand" class="col-md-3 control-label">Brand</label>
+				<label for="brand" class="col-md-3 control-label"><fmt:message key="i18n.brand"></fmt:message></label>
 				<div class="col-md-6">
 					<input type="text" class="form-control" id="brand" name="brand" placeholder="Brand">
 					<span class="help-block"></span>
@@ -402,32 +402,33 @@
 			</div>
 			
 			<div class="form-group">
-				<label for="category" class="col-md-3 control-label">Category</label>
+				<label for="category" class="col-md-3 control-label"><fmt:message key="i18n.category"></fmt:message></label>
 				<div class="col-md-6">
-					<select class="form-control" id="category" name="category"><option value="0">Please select</option>
-						<option value="T-Shirt">T-Shirt</option>
-						<option value="Jeans">Jeans</option>
-						<option value="Trousers">Trousers</option>
-						<option value="Shirt">Shirt</option>
-						<option value="Jackets">Jackets & Coats</option>
+					<select class="form-control" id="category" name="category">
+						<option value="0"><fmt:message key="i18n.select"></fmt:message></option>
+						<option value="T-Shirt"><fmt:message key="i18n.t-shirt"></fmt:message></option>
+						<option value="Jeans"><fmt:message key="i18n.jeans"></fmt:message></option>
+						<option value="Trousers"><fmt:message key="i18n.trousers"></fmt:message></option>
+						<option value="Shirt"><fmt:message key="i18n.shirt"></fmt:message></option>
+						<option value="Jackets"><fmt:message key="i18n.jackets&coats"></fmt:message></option>
 					</select>
 					<span class="help-block"></span>
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<label for="gender" class="col-md-3 control-label">Gender</label>
+				<label for="gender" class="col-md-3 control-label"><fmt:message key="i18n.gender"></fmt:message></label>
 				<div class="col-md-6">
 					<select class="form-control" id="gender" name="gender">
-						<option value="Male">Male</option>
-						<option value="Female">Female</option>
+						<option value="Male"><fmt:message key="i18n.male"></fmt:message></option>
+						<option value="Female"><fmt:message key="i18n.female"></fmt:message></option>
 					</select>
 					<span class="help-block"></span>
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<label for="price" class="col-md-3 control-label">Price</label>
+				<label for="price" class="col-md-3 control-label"><fmt:message key="i18n.price"></fmt:message></label>
 				<div class="col-md-6">
 					<input type="text" class="form-control" id="price" name="price" placeholder="$0.00">
 					<span class="help-block"></span>
@@ -435,7 +436,7 @@
 			</div>
 			
 			<div class="form-group">
-				<label for="color" class="col-md-3 control-label">Color</label>
+				<label for="color" class="col-md-3 control-label"><fmt:message key="i18n.color"></fmt:message></label>
 				<div class="col-md-6">
 					<input type="text" class="form-control" id="color" name="color" placeholder="color">
 					<span class="help-block"></span>
@@ -444,7 +445,7 @@
 			
 			<div class="form-group row">
 			
-				<label for="" class="col-md-3 control-label">Size</label>
+				<label for="" class="col-md-3 control-label"><fmt:message key="i18n.size"></fmt:message></label>
 				<div class="col-md-2">
 					<input type="text" class="form-control size" id="sizeS" name="sizeS" placeholder="S stored">
 					<span class="help-block"></span>
@@ -470,7 +471,7 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label"></label>
 				<div class="col-md-6" id="upload_update_btn_area">
-					<button class="btn btn-primary submit" id="upload_btn">Upload</button>
+					<button class="btn btn-primary submit" id="upload_btn"><fmt:message key="i18n.upload"></fmt:message></button>
 				</div>
 			</div>
 			

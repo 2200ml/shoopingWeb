@@ -187,20 +187,24 @@
 			
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel">Change Password</h4>
+					<h4 class="modal-title" id="myModalLabel"><fmt:message key="i18n.changePassword"></fmt:message></h4>
 				</div>
 				<div class="modal-body">
 				
 					<form class="form-horizontal" id="change_password_form">
 					 	 <div class="form-group">
-					    	<label for="password" class="col-md-4 control-label">New Password</label>
+					    	<label for="password" class="col-md-4 control-label">
+					    		<fmt:message key="i18n.newPassword"></fmt:message>
+					    	</label>
 					     	<div class="col-md-7">
 					      		<input type="password" class="form-control" id="change_password" name="changePassword"/>
 					      		<span class="help-block"></span>
 					    	</div>
 					  	</div>
 					  	<div class="form-group">
-					    	<label for="confirmPassword" class="col-md-4 control-label">Confirm Password</label>
+					    	<label for="confirmPassword" class="col-md-4 control-label">
+					    		<fmt:message key="i18n.confirmPassword"></fmt:message>
+					    	</label>
 					     	<div class="col-md-7">
 					      		<input type="password" class="form-control" id="change_confirmPassword" name="changeConfirmPassword"/>
 					      		<span class="help-block"></span>
@@ -210,8 +214,12 @@
 					
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal" id="close_changePassword">Close</button>
-					<button type="button" class="btn btn-primary" id="save_changePassword">Change</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal" id="close_changePassword">
+						<fmt:message key="i18n.close"></fmt:message>
+					</button>
+					<button type="button" class="btn btn-primary" id="save_changePassword">
+						<fmt:message key="i18n.change"></fmt:message>
+					</button>
 				</div>
 			</div>
 		</div>
@@ -220,7 +228,7 @@
 	<div class="container">
 	
 		<div class="col-md-offset-4">
-			<h2>Member Details</h2>
+			<h2><fmt:message key="i18n.memberDetails"></fmt:message></h2>
 			<br>
 		</div>
 	
@@ -229,31 +237,31 @@
 			<input type="hidden" name="id" id="id"/>
 		
 			<div class="form-group">
-				<label for="username" class="col-sm-2 control-label">Username</label>
+				<label for="username" class="col-sm-2 control-label"><fmt:message key="i18n.username"></fmt:message></label>
 				<div class="col-sm-6">
 					<p class="form-control-static" id="username"></p>
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<label for="accountBalance" class="col-sm-2 control-label">Account Balance</label>
+				<label for="accountBalance" class="col-sm-2 control-label"><fmt:message key="i18n.accountBalance"></fmt:message></label>
 				<div class="col-sm-6">
 					<p class="form-control-static" id="accountBalance"></p>
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<label for="password" class="col-sm-2 control-label">Password</label>
+				<label for="password" class="col-sm-2 control-label"><fmt:message key="i18n.password"></fmt:message></label>
 				<div class="col-sm-6" id="password_Append">
 					<p class="form-control-static">********</p>
 				</div>
 				<div class="col-sm-2">
-					<button type="button" class="btn btn-default" id="change_password_btn">Change</button>
+					<button type="button" class="btn btn-default" id="change_password_btn"><fmt:message key="i18n.change"></fmt:message></button>
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label for="email" class="col-sm-2 control-label">Email</label>
+				<label for="email" class="col-sm-2 control-label"><fmt:message key="i18n.email"></fmt:message></label>
 				<div class="col-sm-6">
 					<input type="text" Class="form-control" id="email" name="email"/>
 					<span  class="help-block"></span>
@@ -261,19 +269,21 @@
 			</div>
 			
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Gender</label>
+				<label class="col-sm-2 control-label"><fmt:message key="i18n.gender"></fmt:message></label>
 				<div class="col-sm-6">
 					<label class="radio-inline">
-					  <input type="radio" name="gender" id="genderM" value="Male"> Male
+					  <input type="radio" name="gender" id="genderM" value="Male">
+					  <fmt:message key="i18n.male"></fmt:message>
 					</label>
 					<label class="radio-inline">
-					  <input type="radio" name="gender" id="genderF" value="Female"> Female
+					  <input type="radio" name="gender" id="genderF" value="Female">
+					  <fmt:message key="i18n.female"></fmt:message>
 					</label>
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<label for="birth" class="col-sm-2 control-label">Birth</label>
+				<label for="birth" class="col-sm-2 control-label"><fmt:message key="i18n.birth"></fmt:message></label>
 
 				<div class="col-sm-2">
 					<select class="form-control" id="birth_day"><option value="0">DD</option>
@@ -313,7 +323,7 @@
 			
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-default" id="submit">Update</button>
+					<button type="submit" class="btn btn-default" id="submit"><fmt:message key="i18n.update"></fmt:message></button>
 				</div>
 			</div>
 			

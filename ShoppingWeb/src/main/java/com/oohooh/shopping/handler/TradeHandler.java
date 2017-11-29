@@ -1,6 +1,7 @@
 package com.oohooh.shopping.handler;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,8 @@ public class TradeHandler {
 	
 	@ResponseBody
 	@RequestMapping("/showTrade")
-	public JsonMsg showTrade(@RequestParam(name="pageNo", required = false, defaultValue = "1") String pageNoStr, HttpServletRequest request) {
+	public JsonMsg showTrade(@RequestParam(name="pageNo", required = false, defaultValue = "1") String pageNoStr, 
+			HttpServletRequest request, Locale locale) {
 		
 		int pageNo = 1;
 		int pageSize = 5;
@@ -35,9 +37,7 @@ public class TradeHandler {
 			if(pageNo < 1) {
 				pageNo = 1;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		String username = (String) request.getSession().getAttribute("username");
 		
@@ -59,18 +59,14 @@ public class TradeHandler {
 			if(pageNo < 1) {
 				pageNo = 1;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		try {
 			pageSize = Integer.parseInt(pageSizeStr);
 			if(pageSize < 5) {
 				pageSize = 5;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 		String username = (String) request.getSession().getAttribute("username");
 		
