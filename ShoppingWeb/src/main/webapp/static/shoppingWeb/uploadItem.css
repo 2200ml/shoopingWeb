@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+.center {
+	width: auto;
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.imgPreview {
+	width: 250px;
+	hight: 300px;
+}

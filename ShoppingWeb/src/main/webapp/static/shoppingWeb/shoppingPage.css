@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+.jumbotron {
+	margin-bottom: 20px;
+}
+
+.grey_font {
+	font-size: 14px;
+	color: grey;
+}
+
+.grey_font a {
+	font-size: 14px;
+	font-color: grey;
+	color: grey;
+	text-decoration: underline;
+}
+
+.page_change {
+	line-height: 34px;
+}
+
+.form-control:focus {
+	outline: none;
+	box-shadow: none;
+	border: 1px solid #ccc;
+}
+
+.jumbotron {
+	padding-bottom: 30px;
+	padding-right: 30px !important;
+}
+
+.itemImgSize {
+	height: 370px;
+	width: 290px;
+}
+
+.itemImgSize img {
+	width: 100%;
+	height: 100%
+}

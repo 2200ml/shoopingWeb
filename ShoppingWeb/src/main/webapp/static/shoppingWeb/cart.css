@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+.picDiv {
+	width: 130px;
+}
+
+.picDiv img {
+	height: 100%;
+	width: 100%;
+}
+
+.glyphicon-briefcase {
+	font-size: 24px;
+}
+
+.remove_item {
+	color: black;
+}
+
+.remove_item:hover {
+	color: black;
+}
+
+.glyphicon-remove {
+	font-size: 20px;
+}
+
+.item_Div {
+	margin-top: 15px;
+}
