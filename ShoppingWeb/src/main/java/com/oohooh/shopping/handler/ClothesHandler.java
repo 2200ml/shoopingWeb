@@ -40,22 +40,22 @@ public class ClothesHandler {
 		return "cart";
 	}
 	
-	@ResponseBody
-	@RequestMapping("deleteClothes")
-	public JsonMsg deleteClothes(@RequestParam("clothesId") Integer clothesId ) {
-		String picPath = "D:\\uploadFiles\\pic\\";
-		Clothes clothes = clothesService.getClothesById(clothesId);
-		String oldPic1Name = clothes.getPicture().getPic1();
-		String oldFolderName = oldPic1Name.substring(0, oldPic1Name.lastIndexOf("\\"));
-		File oldFileFolder = new File(picPath + oldFolderName);
-		
-		if(oldFileFolder.exists()) {
-			ShoppingWebUtil.deleteFile(oldFileFolder);
-		}
-		
-		clothesService.delete(clothesId);
-		return JsonMsg.success();
-	}
+//	@ResponseBody
+//	@RequestMapping("deleteClothes")
+//	public JsonMsg deleteClothes(@RequestParam("clothesId") Integer clothesId ) {
+//		String picPath = "D:\\uploadFiles\\pic\\";
+//		Clothes clothes = clothesService.getClothesById(clothesId);
+//		String oldPic1Name = clothes.getPicture().getPic1();
+//		String oldFolderName = oldPic1Name.substring(0, oldPic1Name.lastIndexOf("\\"));
+//		File oldFileFolder = new File(picPath + oldFolderName);
+//		
+//		if(oldFileFolder.exists()) {
+//			ShoppingWebUtil.deleteFile(oldFileFolder);
+//		}
+//		
+//		clothesService.delete(clothesId);
+//		return JsonMsg.success();
+//	}
 	
 	
 	@ResponseBody

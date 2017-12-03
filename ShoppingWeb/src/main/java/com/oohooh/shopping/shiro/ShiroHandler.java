@@ -43,7 +43,7 @@ public class ShiroHandler {
 				String url = null;
 				
 		        if (savedRequest == null || savedRequest.getRequestUrl() == null) {
-		        	url = "myAccount.jsp";
+		        	url = "myAccount";
 		        }else {
 		        	url = savedRequest.getRequestUrl();
 		        }

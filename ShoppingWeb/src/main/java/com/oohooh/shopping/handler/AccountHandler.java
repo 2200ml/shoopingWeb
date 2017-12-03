@@ -62,7 +62,7 @@ public class AccountHandler {
 		}
 		
 		accountService.save(account);
-		return JsonMsg.success().add("redirect", "myAccount.jsp");
+		return JsonMsg.success().add("redirect", "myAccount");
 	}
 	
 	@ResponseBody

@@ -8,6 +8,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.oohooh.shopping.entities.Account;
 import com.oohooh.shopping.entities.Clothes;
 import com.oohooh.shopping.entities.Picture;
+import com.oohooh.shopping.service.ClothesService;
 import com.oohooh.shopping.service.UploadService;
 import com.oohooh.shopping.utils.JsonMsg;
 import com.oohooh.shopping.utils.ShoppingWebUtil;
@@ -29,6 +34,9 @@ public class UploadHandler {
 
 	@Autowired
 	private UploadService uploadService;
+	
+	@Autowired
+	private ClothesService clothesService;
 	
 	@ModelAttribute
 	public void getClothes(@RequestParam(value="clothesId", required=false) String clothesIdStr, Map<String, Object> map) {
@@ -44,8 +52,28 @@ public class UploadHandler {
 	}
 	
 	@ResponseBody
+	@RequestMapping("deleteClothes")
+	public JsonMsg deleteClothes(HttpServletRequest request, @RequestParam("clothesName") String clothesName, 
+			@RequestParam("clothesId") Integer clothesId) {
+		String picPath = "D:\\uploadFiles\\pic\\";
+		Clothes clothes = clothesService.getClothesById(clothesId);
+		String oldPic1Name = clothes.getPicture().getPic1();
+		String oldFolderName = oldPic1Name.substring(0, oldPic1Name.lastIndexOf("\\"));
+		File oldFileFolder = new File(picPath + oldFolderName);
+		
+		if(oldFileFolder.exists()) {
+			ShoppingWebUtil.deleteFile(oldFileFolder);
+		}
+		
+		clothesService.delete(clothesId);
+		return JsonMsg.success();
+	}
+	
+	@ResponseBody
 	@RequestMapping("/clothesUpdate/{clothesId}")
-	public JsonMsg clothesUpdate(Clothes clothes, @RequestParam(name="files[]", required=false) MultipartFile[] files) throws IOException {
+	public JsonMsg clothesUpdate(HttpServletRequest request, @RequestParam("clothesName") String clothesName, Clothes clothes, 
+			@RequestParam(name="files[]", required=false) MultipartFile[] files) throws IOException {
+		
 		String picPath = "D:\\uploadFiles\\pic\\";
 		
 		if(files != null && files.length > 0) {
@@ -128,7 +156,8 @@ public class UploadHandler {
 	
 	@ResponseBody
 	@RequestMapping("/uploadClothes")
-	public JsonMsg uploadClothes(Clothes clothes, @RequestParam(name="files[]", required=true) MultipartFile[] files) throws IOException {
+	public JsonMsg uploadClothes(HttpServletRequest request, @RequestParam("clothesName") String clothesName, Clothes clothes,
+			@RequestParam(name="files[]", required=true) MultipartFile[] files) throws IOException {
 		String picPath = "D:\\uploadFiles\\pic\\";
 		
 		if(files != null && files.length > 0) {

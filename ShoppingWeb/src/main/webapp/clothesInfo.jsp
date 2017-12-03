@@ -92,7 +92,8 @@
 			var flag = confirm("Are you sure you want to delete?");
 			if(flag){
 				var url = "deleteClothes";
-				var args = {"clothesId" : clothesId};
+				var clothesName = $("#item_Name").text();
+				var args = {"clothesId" : clothesId, "clothesName" : clothesName};
 				$.post(url, args, function(result){
 					if(result.code == 100){
 						location.href = "index.jsp";

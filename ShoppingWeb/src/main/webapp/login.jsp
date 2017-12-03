@@ -25,7 +25,7 @@
 						location.href = result.jsonObject.url;
 					}else{
 						//防止session失效時找不到savedRequest儲存的網頁
-						location.href = "myAccount.jsp";
+						location.href = "myAccount";
 					}
 			    }
 				else if(result.code == 200){
