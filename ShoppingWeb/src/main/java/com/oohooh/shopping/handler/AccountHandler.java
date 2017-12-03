@@ -44,9 +44,9 @@ public class AccountHandler {
 	
 	@ResponseBody
 	@RequestMapping(value="/update/{id}", method=RequestMethod.PUT)
-	public JsonMsg update(@Valid Account account, BindingResult result) {
+	public JsonMsg update(@Valid Account account, BindingResult result, @RequestParam(value="password", required=false) String password) {
 		
-		String password = account.getPassword();
+		System.out.println("update account password: " + password);
 		
 		if(result.hasErrors()) {
 			Map<String, Object> errorFields = new HashMap<>();

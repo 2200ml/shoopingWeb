@@ -27,7 +27,6 @@
 				$("#birth_year").val([birth_year]);
 				$("#birth_month").val([birth_month]);
 				$("#birth_day").val([birth_day]);
-				
 			}
 		});
 		
@@ -108,7 +107,6 @@
 						alert("Update Success!!!");
 						location.href = result.jsonObject.redirect;
 					}else{
-						
 						if(undefined != result.jsonObject.errorFields.email){
 							show_validate_msg("#email", "error", result.jsonObject.errorFields.email);
 						}else if(undefined == result.jsonObject.errorFields.email){
