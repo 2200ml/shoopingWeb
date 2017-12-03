@@ -409,7 +409,15 @@ MySql
 				
 				[注意]若想在type:直接寫PUT，Tomcat容器不會自動封裝請求參數，需使用springMVC提供的Filter來封裝，
 					  需在web.xml配置HttpPutFormContentFilter
-					  
+		
+		[後端]
+			[注意]
+				.修改會員資料時，需在update方法參數中添加額外的password參數
+				.password參數不能從account參數去取得，否則password一定會有值，不能判斷是否修改過密碼，每次都會重新加密一次
+				
+				update(@Valid Account account, BindingResult result, @RequestParam(value="password", required=false) String password)
+				
+		
 11.myOrder.jsp
 	.用戶的交易紀錄 
 	.使用分頁
@@ -570,6 +578,8 @@ MySql
 	14.@DateTimeFormat 將頁面傳過來的字串轉為指定格式的Date類型
 	
 	15.@Temporal 指定物件在數據庫中儲存的格式
+	
+	16.一些Handler中catch異常處理的內容為空白，因已設置預設值，故出現異常就是取預設值。
 			
 [未能實現的功能]
 	在使用JQuery File Upload框架時，原本想做出可以指定欄位上傳檔案的效果(例如想只修改第二張圖片)，
