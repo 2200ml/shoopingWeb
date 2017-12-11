@@ -50,7 +50,7 @@
 				var itemPic = item.clothes.picture.pic1
 				
 				var imgDiv = $("<div class='col-md-2 picDiv'><div>")
-						.append($("<a href='clothesInfo.jsp?clothesId=" + itemId + "'></a>")
+						.append($("<a href='clothesInfo/" + itemId + "'></a>")
 						.append($("<img src='/pic/" + itemPic + "'/>")));
 				
 				var priceDiv = $("<div class='row col-md-offset-1 col-md-8'></div>").append($("<h4></h4>")
@@ -103,7 +103,7 @@
 					//remove_row 朝著透明度0 歷時1500毫秒 變化
 					remove_row.animate({opacity:'0.0'}, 1500);
 					//1500毫秒後執行 location.href='cart.jsp
-					setTimeout("location.href='cart.jsp'", 1500);
+					setTimeout("location.href='cart'", 1500);
 				}
 			});
 			
@@ -120,7 +120,7 @@
 			
 			$.post(url, args, function(result){
 				if(result.code == 100){
-					location.href = "cart.jsp";
+					location.href = "cart";
 				}
 			});
 			
@@ -137,7 +137,7 @@
 			
 			$.post(url, args, function(result){
 				if(result.code == 100){
-					location.href = "cart.jsp";
+					location.href = "cart";
 				}
 			});
 			

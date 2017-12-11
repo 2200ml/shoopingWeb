@@ -1,6 +1,5 @@
 package com.oohooh.shopping.handler;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
@@ -10,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.format.number.CurrencyFormatter;
+import org.springframework.format.number.CurrencyStyleFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,24 +40,6 @@ public class ClothesHandler {
 	public String cartPage() {
 		return "cart";
 	}
-	
-//	@ResponseBody
-//	@RequestMapping("deleteClothes")
-//	public JsonMsg deleteClothes(@RequestParam("clothesId") Integer clothesId ) {
-//		String picPath = "D:\\uploadFiles\\pic\\";
-//		Clothes clothes = clothesService.getClothesById(clothesId);
-//		String oldPic1Name = clothes.getPicture().getPic1();
-//		String oldFolderName = oldPic1Name.substring(0, oldPic1Name.lastIndexOf("\\"));
-//		File oldFileFolder = new File(picPath + oldFolderName);
-//		
-//		if(oldFileFolder.exists()) {
-//			ShoppingWebUtil.deleteFile(oldFileFolder);
-//		}
-//		
-//		clothesService.delete(clothesId);
-//		return JsonMsg.success();
-//	}
-	
 	
 	@ResponseBody
 	@RequestMapping("/updateQty")
@@ -275,6 +258,7 @@ public class ClothesHandler {
 		
 		List<Integer> navigateNum = ShoppingWebUtil.getNavigateNumber(page);
 		
+		//讓commons-title.jsp可以獲取到locale參數
 		request.getSession().setAttribute("locale", locale);
 		
 		map.put("page", page);

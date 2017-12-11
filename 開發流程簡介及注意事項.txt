@@ -163,7 +163,7 @@ MySql
 			1.)shoppingPage方法 
 				獲取page資訊
 				
-			2.)showItem方法 (用jquery方式展示商品，減少html與代碼的耦合)
+			2.)showItem方法 (用javascript方式展示商品，減少html與代碼的耦合)
 			   .shoppingPage、showItem方法幾乎一樣，shoppingPage主要是為了在換頁時也能有改變網址列的效果，
 				 讓用戶可以將頁面加到我的最愛，達到更好的用戶體驗;
 			   .有些springData沒有提供的page功能也能一併放入到請求域中，方便前端操作
@@ -438,9 +438,62 @@ MySql
 				.頁面要展示的是Trade資料不是Account資料;應該讓Trade當主角，由Trade來維護一對一關聯關係，由Trade來獲取Account
 				.TradeHandler從Session中獲取username傳入TradeService的getPage方法
 				.Page類型為Page<Trade>
+
+===國際化===
+
+	1.使用Spring MVC國際化功能
+	
+	2.在springDispatcherServlet-servlet.xml配置:
+		1.)org.springframework.context.support.ResourceBundleMessageSource
+			配置basename
+			
+		2.)org.springframework.web.servlet.i18n.LocaleChangeInterceptor
+			將帶有Locale的請求參數轉化為Locale物件，並獲取LocaleResolver
+			
+		3.)org.springframework.web.servlet.i18n.SessionLocaleResolver
+			存取Locale物件到Session中
+	
+	3.在commons-title.jsp中添加帶有Locale參數並可切換的Select
+		使用fmt標籤做字串的國際化
+		
+	[補充]
+		1.)JSP頁面可使用spring標籤來做國際化 <spring:eval expression=""/>
+		2.)後端部分可使用CurrencyStyleFormatter對數據做貨幣國際化
+			currencyStyleFormatter.print(Number number, Locale locale)
+		3.)獲取Page內容方法
+			page.getContent().iterator().next().getXXX()
+			可使用for迴圈對page內容做國際化
 				
-				
-[實體類]		
+		4.)因專案是採用返回json數據的方式，目前還不知如何對json數據做貨幣、時間的國際化;
+			fmt、spring標籤僅能解析請求域中的數據
+			
+	[注意]
+		若請求是以超連結轉發XXX.jsp的方式，Spring MVC的國際化功能會不起作用;
+		必須通過Controller才能獲取到Locale
+			
+===Spring AOP===
+
+	1.在applicationContext.xml 或 springDispatcherServlet-servlet.xml配置: (視需要在Controller或Service中做AOP而定)
+		<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+		proxy-target-class="false" (預設) 僅對介面做代理AOP
+		proxy-target-class="true" 配置為true 可對類做代理AOP
+
+	2.在此專案中僅對Admin的三個操作做AOP
+		deleteClothes、uploadClothes、clothesUpdate		
+		
+		1.)若想取得被通知方法的參數，可在Pointcut表達式後添加 && args(XXX1, XXX2, ...);
+	       參數的位置順序必須與被通知方法一致，若該方法後還有其他參數需添加...佔位符
+	       標示為@Pointcut的方法也必須攜帶該參數。
+		   [注意]
+				I. 通知方法中若要使用JoinPoint，需將其置為第一個參數
+				II.多個Pointcut表達式可用&& || 連接
+		
+		2.)[補充]若需要的物件沒辦法由參數取得，可在被通知方法的類中添加自定義的資料成員，再使用Field來獲取
+			ex: Field f = joinpoint.getTarget().getClass().getDeclaredField("username");    //獲取屬性-->Field  
+				f.setAccessible(true);  //如果是private的要設置為可訪問
+				String user = (String) f.get(joinpoint.getTarget());  //獲取值
+		
+===實體類===		
 		
 	1.ShoppingCart
 		1.)addClothes(Clothes clothes, Integer size)

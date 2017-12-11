@@ -58,7 +58,7 @@
 				var clothesSet = result.jsonObject.page.content;
 				$.each(clothesSet, function(index, item){
 					var itemDiv = $("<div class='caption'></div>").append($("<h5>" + item.clothesName + "</h5>"))
-																  .append($("<p><b>$"+ item.price + "</b></p>"));
+																  .append($("<p><b>$ "+ item.price + "</b></p>"));
 					
 					//使用虛擬路徑的方式存取圖片 /pic/
 					var img = $("<a href='#'></a>").attr("href", "clothesInfo/" + item.clothesId)

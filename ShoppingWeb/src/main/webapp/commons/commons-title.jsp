@@ -66,9 +66,6 @@
 					<h1>Example page header <small>Subtext for header</small></h1>
 				</div>
 				<div class="col-md-2 pull-right">
-<%-- 					<a href="shoppingPage?locale=en_US"><fmt:message key="i18n.language_en_us"></fmt:message></a> --%>
-<!-- 					<br> -->
-<%-- 					<a href="shoppingPage?locale=zh_TW"><fmt:message key="i18n.language_zh_tw"></fmt:message></a> --%>
 					<select class="pull-right" id="language_div">
 						<option value="en_US">English</option>
 						<option value="zh_TW">Traditional Chinese</option>

@@ -103,12 +103,9 @@ public class UploadHandler {
 			
 			for(MultipartFile file : files){
 				String originalFilename = file.getOriginalFilename();
-				System.out.println("originalFilename: " + originalFilename);
-				
 				String newFileName = folderName + "\\" + originalFilename;
 				File newFile = new File(picPath + newFileName);
 				file.transferTo(newFile);
-				System.out.println(newFileName);
 				picList.add(newFileName);
 			}
 			
