@@ -102,6 +102,13 @@
 	    	fileCount++;
 	    	
 	    	for (var i = 0; i < data.files.length; i++) {
+	    		if(fileList.length >= 4) {
+                	$("#files").empty();
+	        		$('<span class="text-danger maxError"/>').text("Max 4 files are allowed").appendTo("#files");
+		    		$(".fileinput-button").attr("disabled", "true");
+		    		$("#fileupload").hide();
+		    		break;
+                } 		
                 fileList.push(data.files[i]);
             }
             
@@ -118,13 +125,6 @@
 	        	var filePreview = $("<div></div>").append(file.preview);
 	        	var fileNameNode = $("<p class='fileName'></p>").append($('<span/>').text(data.files[index].name));
  	        	var previewDiv = $("<div></div>").append(filePreview).append(fileNameNode);
- 	        	
- 	        	if(data.files.length > 0){
- 	        		$(".imgArea").eq(index).children("img").hide();
- 	        		$(".imgArea").eq(index).append(previewDiv);
- 	        		$(".fileinput-button").attr("disabled", "true");
- 		    		$("#fileupload").hide();
- 	        	}
  	        	
 				$(".imgArea").eq(imgIndex).children("img").hide();
 				$(".imgArea").eq(imgIndex).append(previewDiv);

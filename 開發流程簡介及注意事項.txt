@@ -3,10 +3,13 @@ Backend:
 Spring, spring MVC, JPA, Spring Data, Shiro, Maven, TortoiseGit
 
 Frontend:
-JQuery, Bootstrap,JQuery File Upload
+JQuery, Bootstrap,JQuery File Upload, HTML/CSS
 
 DB:
 MySql
+
+IDE:
+Eclipse
 
 ====網站功能====
 
@@ -15,18 +18,22 @@ MySql
 .商品分類
 .搜尋商品
 .金額過濾
-.商品Detail 
+.商品細節
 
 .登入 [Shiro]
 .註冊 [Shiro]
 .會員資料、修改 [Shiro]
 
 .購物車
-.checkout
+.模擬交易
 .交易紀錄
 
-.新增商品、上傳圖片 [JQuery File Upload]
+.新增商品、預覽圖片 [JQuery File Upload]
 .修改、刪除商品
+
+.各種前後端校驗
+.文字國際化 	
+.admin操作的日誌紀錄 [Spring AOP]	
 
 ====配置開發環境====
 
@@ -73,7 +80,7 @@ MySql
 		
 	2.)InternalResourceViewResolver
 		[注意]
-			prefix配置為"/"而不是"/WEB-INF/views/"可彈性選擇要轉發的頁面
+			prefix配置為"/"而不是"/WEB-INF/views/"，可彈性選擇要轉發的頁面
 			ex:return "WEB-INF/views/XXX" 		
 	3.)CommonsMultipartResolver
 		SpringMVC要上傳檔案時的標配		
@@ -134,7 +141,7 @@ MySql
 		
 3.shoppingPage.jsp 
 	顯示商品並使用分頁
-	各種條件過濾連結、Filter、商品搜尋
+	各種條件過濾連結、商品搜尋
 	
 	[前端]
 		1.)build_clothes_div()
@@ -151,7 +158,7 @@ MySql
 						.在需要顯示的圖片路徑前添加虛擬路徑
 							<img src='/pic/" + item.picture.pic1 + "'>
 						
-		2.)各種條件過濾連結、Filter、商品搜尋
+		2.)各種條件過濾連結、商品搜尋
 			在請求url中攜帶各種條件參數
 			var pageParameter = 
 				"&pageSize=" + pageSize + "&minPrice=" + minPrice + "&maxPrice=" + maxPrice + 
@@ -210,11 +217,11 @@ MySql
 				.刪除DB中的資料
 			
 5.cart.jsp
-	.購物車中商品detail
+	.購物車中商品細項
 	.修改商品數量
 	.修改商品size
 	.移除購物車中商品
-	.checkout
+	.checkout模擬結帳
 	
 	[前端]
 		1.)removeItem使用了動畫效果
@@ -243,6 +250,7 @@ MySql
 	.顯示購買清單
 	.若餘額、庫存不足，顯示錯誤訊息
 	.確定交易
+	.若交易成功，創建Trade紀錄交易資訊
 	
 	[前端]
 		校驗用戶餘額、商品庫存
@@ -259,7 +267,7 @@ MySql
 			update
 				.創建Trade 紀錄交易資訊
 				
-				.創建TradeItem 紀錄交易商品Detail
+				.創建TradeItem 紀錄交易商品細節
 					tradeItemRepository可直接儲存tradeItem的集合
 						Set<TradeItem> tradeItems = new LinkedHashSet<>();
 						tradeItemRepository.save(tradeItems);
@@ -267,6 +275,7 @@ MySql
 				.餘額、庫存、交易資訊皆更新完畢後清空購物車 sc.clear();
 				
 7.uploadItem.jsp [需有admin權限才能訪問;使用JQuery File Upload框架]
+	.JQuery File Upload 框架具有預覽圖片及傳輸條效果
 	.建立或修改商品並上傳圖片
 	
 	[前端]
@@ -286,7 +295,7 @@ MySql
 		3.)[注意]$(XXX).eq(n)可用來選擇第n個XXX選擇器
 		
 		4.)<input type="file" name="files[]" multiple> 添加了multiple屬性，在選擇檔案時可以一次選擇多個檔案
-			受maxNumberOfFiles屬性約束，在選擇超過數量後會顯示錯誤訊息
+			受maxNumberOfFiles屬性約束，在多選時若超過數量後會顯示錯誤訊息
 			
 		5.)[注意]特別功能的變數:
 			var fileCount = 0; 用來記錄已上傳了幾個檔案，限制上傳個數
@@ -302,6 +311,9 @@ MySql
 			$("#fileupload").fileupload('send',
 						{files:fileList,  //上傳檔案
 						 formData:        //其他表單資料...
+						 
+		9.)因限制只能上傳4個檔案，若因選擇超過4張圖片，便會發生嚴重錯誤；
+			在添加檔案到fileList時，做條件過濾，避免存放過多檔案。
 						 
 	[後端]
 		UploadHandler
@@ -421,6 +433,7 @@ MySql
 11.myOrder.jsp
 	.用戶的交易紀錄 
 	.使用分頁
+	.點擊標題可展開內容
 					  
 	[前端]
 		顯示交易紀錄時間
@@ -432,7 +445,7 @@ MySql
 			.開發時遇到的問題:
 				原本讓Account與Trade建立一對一關聯關係，並由Account來維護，想從Account來獲取Trade資料;
 			    TradeService的Page類型就使用了Account (Page<Account>)，
-			    但返回到前端的Json數據格式整個詭異，無法each內容提取資料
+			    但返回到前端的Json數據格式異常，無法each內容提取資料
 			  
 			.解決辦法:
 				.頁面要展示的是Trade資料不是Account資料;應該讓Trade當主角，由Trade來維護一對一關聯關係，由Trade來獲取Account
@@ -481,8 +494,8 @@ MySql
 	2.在此專案中僅對Admin的三個操作做AOP
 		deleteClothes、uploadClothes、clothesUpdate		
 		
-		1.)若想取得被通知方法的參數，可在Pointcut表達式後添加 && args(XXX1, XXX2, ...);
-	       參數的位置順序必須與被通知方法一致，若該方法後還有其他參數需添加...佔位符
+		1.)若想取得被通知方法的參數，可在Pointcut表達式後添加 && args(XXX1, XXX2, ..);
+	       參數的位置順序必須與被通知方法一致，若該方法後還有其他參數需添加..佔位符
 	       標示為@Pointcut的方法也必須攜帶該參數。
 		   [注意]
 				I. 通知方法中若要使用JoinPoint，需將其置為第一個參數
@@ -521,8 +534,8 @@ MySql
 		.交易紀錄相關訊息
 		
 	4.TradeItem
-		.交易商品Detail
-		.[注意]原本與Clothes是多對一的關聯關係，但在刪除了Clothes後會發生交易商品Detail讀取Clothes訊息為null的狀況，
+		.交易商品細節
+		.[注意]原本與Clothes是多對一的關聯關係，但在刪除了Clothes後會發生交易商品細節讀取Clothes訊息為null的狀況，
 			   之後改成把clothes的相關訊息在交易時就添加到TradeItem的屬性中	
 	
 	5.Account
@@ -534,7 +547,7 @@ MySql
 		.與AccountBalance是一對一關聯關係
 			[注意]在創建Account時會同時創建AccountBalance，但此時AccountBalance還是臨時對象，在建立一對一關聯關係時會報錯
 				  object references an unsaved transient instance - save the transient instance beforeQuery flushing
-				  解決辦法:在關聯關係註解中添加 cascade = { CascadeType.ALL }
+				  解決辦法:在關聯關係註解中添加級聯操作 cascade = { CascadeType.ALL }
 
 				  
 [實體類間的關聯關係]
@@ -625,7 +638,7 @@ MySql
 		2.)在此先創建一個實例，避免造成空指針異常。
 		ex: Set<TradeItem> tradeItems = new HashSet<>();
 		
-	13.jquery要獲取到radio類型的值須使用[]來包裹
+	13.jquery要存取到radio類型的值須使用[]來包裹
 		$("#update_form :radio[name=gender]").val([result.jsonObject.account.gender]);
 		
 	14.@DateTimeFormat 將頁面傳過來的字串轉為指定格式的Date類型
@@ -633,6 +646,9 @@ MySql
 	15.@Temporal 指定物件在數據庫中儲存的格式
 	
 	16.一些Handler中catch異常處理的內容為空白，因已設置預設值，故出現異常就是取預設值。
+	
+	17.jquery重新整理頁面的方法
+		location.reload();
 			
 [未能實現的功能]
 	在使用JQuery File Upload框架時，原本想做出可以指定欄位上傳檔案的效果(例如想只修改第二張圖片)，

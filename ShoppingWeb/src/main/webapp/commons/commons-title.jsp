@@ -49,7 +49,7 @@
 			var locale = $(this).val();
 			var args = {"locale": locale, "time": new Date()}
 			$.post(url, args, function(){
-				location.href = "index.jsp";
+				location.reload();
 			});
 		});
 		
